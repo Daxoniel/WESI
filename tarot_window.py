@@ -1,4 +1,7 @@
 import random
+import time
+import math
+from datetime import datetime
 import ttkbootstrap as tb
 from ttkbootstrap.constants import *
 from ttkbootstrap.dialogs import Messagebox
@@ -24,8 +27,18 @@ class TarotWindow(tb.Toplevel):
         self.question_var = tb.StringVar()
         self.cooldown_seconds = 10
         self.cooldown_job = None
+        self._cooldown_remaining = 0
+        self._cooldown_until = 0
 
         self.build_ui()
+        last_draw = self.app.store.state["tarot"].get("last_draw_at")
+        if last_draw:
+            try:
+                remaining = self.cooldown_seconds - (datetime.now() - datetime.strptime(last_draw, "%Y-%m-%d %H:%M:%S")).total_seconds()
+                if remaining > 0:
+                    self.start_cooldown(min(self.cooldown_seconds, math.ceil(remaining)))
+            except (ValueError, TypeError):
+                pass
 
     def build_ui(self):
         main = tb.Frame(self, padding=14)
@@ -68,19 +81,26 @@ class TarotWindow(tb.Toplevel):
         for child in self.result_wrap.winfo_children():
             child.destroy()
 
-    def _get_card_image(self, img_filename: str, reversed_card: bool):
+    def _get_card_image(self, img_filename: str, reversed_card: bool, size=(320, 560)):
         path = TAROT_DIR / img_filename
         if path.exists():
-            return rotate_image_for_tarot(str(path), reversed_card, (360, 630))
+            return rotate_image_for_tarot(str(path), reversed_card, size)
         return None
 
     def draw_cards(self):
+        if time.monotonic() < self._cooldown_until:
+            return
         question = self.question_var.get().strip()
         spread_label = self.spread_var.get()
-        spread = next(k for k, v in SPREAD_LABELS.items() if v == spread_label)
+        spread = next((k for k, v in SPREAD_LABELS.items() if v == spread_label), None)
+        if spread is None:
+            return
 
         positions = SPREADS[spread]
         single_mode = len(positions) == 1
+        if len(self.app.tarot_cards) < len(positions):
+            Messagebox.ok("牌库不足，请检查塔罗数据文件。", "无法抽牌")
+            return
         selected = random.sample(self.app.tarot_cards, k=len(positions))
 
         cards = []
@@ -111,8 +131,8 @@ class TarotWindow(tb.Toplevel):
                 cards_row,
                 text=pos,
                 padding=10,
-                width=420,
-                height=860,
+                width=350 if single_mode else 300,
+                height=700,
             )
             frame.pack_propagate(False)
 
@@ -121,7 +141,8 @@ class TarotWindow(tb.Toplevel):
             else:
                 frame.pack(side=LEFT, padx=8, pady=4)
 
-            img = self._get_card_image(card_info["img"], reversed_card)
+            img = self._get_card_image(card_info["img"], reversed_card,
+                                       (320, 560) if single_mode else (260, 455))
             if img:
                 lbl = tb.Label(frame, image=img)
                 lbl.image = img
@@ -171,6 +192,7 @@ class TarotWindow(tb.Toplevel):
         self.app.flash_status("塔罗已记录。")
 
     def start_cooldown(self, seconds: int):
+        self._cooldown_until = time.monotonic() + seconds
         self.draw_btn.configure(state=DISABLED)
         self._cooldown_remaining = seconds
         self._tick_cooldown()
@@ -179,12 +201,19 @@ class TarotWindow(tb.Toplevel):
         self.draw_btn.configure(text=f"冷却中（{self._cooldown_remaining}s）")
         if self._cooldown_remaining <= 0:
             self.draw_btn.configure(text="抽牌", state=NORMAL)
+            self.cooldown_job = None
             return
         self._cooldown_remaining -= 1
         self.cooldown_job = self.after(1000, self._tick_cooldown)
 
     def open_history(self):
-        TarotHistoryWindow(self.app)
+        self.app._open_or_focus("tarot_history", TarotHistoryWindow)
+
+    def destroy(self):
+        if self.cooldown_job is not None:
+            self.after_cancel(self.cooldown_job)
+            self.cooldown_job = None
+        super().destroy()
 
 
 class TarotHistoryWindow(tb.Toplevel):

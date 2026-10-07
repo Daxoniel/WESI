@@ -4,9 +4,14 @@ import random
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
-from tkinter import dialog
+from tkinter import TclError
 from typing import Any, Dict, List, Tuple
-from utils import *
+from utils import (
+    load_tarot_cards, load_pet_items, load_pet_events, import_d2_names_from_local_json,
+    load_battle_attack_points, load_battle_base_game_weapons, load_battle_damage_types,
+    load_battle_reactions, load_battle_real_weapons, load_battle_warm_messages,
+    make_rounded_image, safe_copy_image, format_now, choose_weighted, parse_dt,
+)
 from tarot_window import TarotWindow
 from quotes_window import QuoteWindow, FavoritesWindow
 from battle_window import BattleWindow
@@ -24,7 +29,7 @@ try:
     import ttkbootstrap as tb
     from ttkbootstrap.constants import *
     from ttkbootstrap.dialogs import Messagebox
-    from ttkbootstrap.scrolled import ScrolledText
+    from ttkbootstrap.widgets.scrolled import ScrolledText
 except Exception as exc:
     raise SystemExit(
         "This program requires ttkbootstrap.\n"
@@ -55,39 +60,8 @@ from config import (
     DEFAULT_STATE,
 )
 
-class DataStore:
-    def __init__(self, path: Path):
-        self.path = path
-        self.state = self.load()
-
-    def load(self) -> Dict[str, Any]:
-        if not self.path.exists():
-            self.save(DEFAULT_STATE)
-            return json.loads(json.dumps(DEFAULT_STATE, ensure_ascii=False))
-        try:
-            with open(self.path, "r", encoding="utf-8") as f:
-                loaded = json.load(f)
-            return deep_merge(json.loads(json.dumps(DEFAULT_STATE, ensure_ascii=False)), loaded)
-        except Exception:
-            self.save(DEFAULT_STATE)
-            return json.loads(json.dumps(DEFAULT_STATE, ensure_ascii=False))
-
-    def save(self, data: Optional[Dict[str, Any]] = None) -> None:
-        target = data if data is not None else self.state
-
-        def clean(obj):
-            if obj is ...:
-                return None
-            if isinstance(obj, list):
-                return [clean(x) for x in obj if x is not ...]
-            if isinstance(obj, dict):
-                return {k: clean(v) for k, v in obj.items() if v is not ...}
-            return obj
-
-        target = clean(target)
-
-        with open(self.path, "w", encoding="utf-8") as f:
-            json.dump(target, f, ensure_ascii=False, indent=2)
+from storage import DataStore
+from income import calculate_income, validate_income, validate_schedule
 
 
 # =========================
@@ -129,9 +103,20 @@ class ThemeDialog(tb.Toplevel):
         tb.Button(button_row, text="关闭", bootstyle="outline-secondary", command=self.destroy).pack(side=LEFT)
 
     def apply_theme(self):
-        self.app.store.state["theme"]["name"] = self.theme_var.get()
+        name = self.theme_var.get()
+        if name not in THEME_PRESETS:
+            Messagebox.ok("请选择列表中的主题。", "主题设置")
+            return
+        colors = {}
         for key, var in self.vars.items():
-            self.app.store.state["theme"]["colors"][key] = var.get().strip() or DEFAULT_STATE["theme"]["colors"][key]
+            color = var.get().strip() or DEFAULT_STATE["theme"]["colors"][key]
+            try:
+                self.winfo_rgb(color)
+            except TclError:
+                Messagebox.ok(f"{key} 的颜色无效，请使用如 #37f2a3 的颜色值。", "主题设置")
+                return
+            colors[key] = color
+        self.app.store.state["theme"] = {"name": name, "colors": colors}
         self.app.store.save()
         self.app.apply_theme(refresh_widgets=True)
 
@@ -150,7 +135,6 @@ class PetWindow(tb.Toplevel):
         self.title("虚拟宠物")
         self.geometry("760x560")
         self.pet_img = None
-        self.forage_running = False
         self.build_ui()
         self.refresh()
 
@@ -179,7 +163,8 @@ class PetWindow(tb.Toplevel):
         self.loot_label.pack(anchor=W, pady=(8, 12))
         control_row = tb.Frame(right)
         control_row.pack(fill=X, pady=(0, 8))
-        tb.Button(control_row, text="去摸鱼", bootstyle="primary", command=self.start_forage).pack(side=LEFT, padx=(0, 8))
+        self.forage_btn = tb.Button(control_row, text="去摸鱼", bootstyle="primary", command=self.start_forage)
+        self.forage_btn.pack(side=LEFT, padx=(0, 8))
         tb.Button(control_row, text="导入D2词库", command=self.import_d2_words).pack(side=LEFT, padx=(0, 8))
         tb.Button(control_row, text="图鉴", command=self.open_codex).pack(side=LEFT, padx=(0, 8))
         tb.Button(control_row, text="历史", command=self.open_history).pack(side=LEFT, padx=(0, 8))
@@ -192,6 +177,10 @@ class PetWindow(tb.Toplevel):
     def refresh(self):
         pet = self.app.store.state["pet"]
         self.status_label.configure(text=f"宠物：{pet['name']}    亲密度：{pet['affinity']}    摸鱼次数：{pet['forage_count']}")
+        running = bool(pet.get("next_forage_at"))
+        self.forage_btn.configure(state=DISABLED if running else NORMAL)
+        if running:
+            self.status_label.configure(text="宠物正在摸鱼中，关闭窗口后仍会继续。")
         self.loot_label.configure(text=f"库存物品数：{len(pet['inventory'])}    相遇次数：{len(pet['encounters'])}")
         if pet.get("image_path") and Image:
             self.pet_img = make_rounded_image(pet["image_path"], (180, 180), radius=28)
@@ -224,7 +213,13 @@ class PetWindow(tb.Toplevel):
         path = filedialog.askopenfilename(filetypes=[("Image Files", "*.png *.jpg *.jpeg *.webp")])
         if not path:
             return
-        saved = safe_copy_image(path, PET_DIR)
+        try:
+            saved = safe_copy_image(path, PET_DIR)
+        except (OSError, ValueError):
+            Messagebox.ok("无法读取图片，请选择有效的图片文件。", "导入失败")
+            return
+        if not saved:
+            return
         self.app.store.state["pet"]["image_path"] = saved
         self.app.store.save()
         self.refresh()
@@ -241,45 +236,16 @@ class PetWindow(tb.Toplevel):
         )
 
     def start_forage(self):
-        if self.forage_running:
-            return
-        self.forage_running = True
-        self.status_label.configure(text="宠物正在摸鱼中……")
-        delay = random.randint(6, 14)
-        self.after(delay * 1000, self.finish_forage)
+        self.app.start_pet_forage()
 
     def finish_forage(self):
-        self.forage_running = False
-        pet = self.app.store.state["pet"]
-        pet["forage_count"] += 1
-        pet["affinity"] += 1
-        if random.random() < 0.7:
-            item = choose_weighted(self.app.pet_items)
-            entry = {
-                "time": format_now(),
-                "kind": "loot",
-                "name": item["name"],
-                "rarity": item["rarity"],
-                "desc": item["desc"],
-            }
-            pet["history"].append(entry)
-            pet["inventory"].append(entry)
-            self.app.flash_status(f"宠物捡到了：{item['name']}")
-        else:
-            story = random.choice(self.app.pet_events)
-            entry = {"time": format_now(), "kind": "encounter", "story": story}
-            pet["history"].append(entry)
-            pet["encounters"].append(entry)
-            self.app.flash_status("宠物带回了一段相遇。")
-        self.app.increment_achievement_check()
-        self.app.store.save()
-        self.refresh()
+        self.app.finish_pet_forage()
 
     def open_codex(self):
-        PetCodexWindow(self.app)
+        self.app._open_or_focus("pet_codex", PetCodexWindow)
 
     def open_history(self):
-        PetHistoryWindow(self.app)
+        self.app._open_or_focus("pet_history", PetHistoryWindow)
 
 
 class PetCodexWindow(tb.Toplevel):
@@ -385,7 +351,8 @@ class WESI:
         self.battle_real_weapons = load_battle_real_weapons()
         self.battle_warm_messages = load_battle_warm_messages()
 
-        self.style = tb.Style(theme=self.store.state["theme"]["name"])
+        theme_name = self.store.state["theme"]["name"]
+        self.style = tb.Style(theme=theme_name if theme_name in THEME_PRESETS else "darkly")
         self.root = self.style.master
         self.root.title(APP_TITLE)
         self.root.geometry(self.store.state["income"].get("window_geometry", "760x860+120+80"))
@@ -395,7 +362,7 @@ class WESI:
         self.status_default = "系统已就绪。"
         self.windows: Dict[str, Any] = {}
 
-        self.last_income_snapshot = 0.0
+        self.last_income_snapshot = None
         self.last_status_tick = 0
         self.status_messages = [
             "系统正在安静地回收今日价值。",
@@ -408,17 +375,8 @@ class WESI:
         self.build_ui()
         self.apply_theme(refresh_widgets=False)
         self.update_income_ui()
-
-    def count_workdays(self, start_date, end_date) -> int:
-        count = 0
-        current = start_date
-
-        while current < end_date:
-            if current.weekday() < 5:
-                count += 1
-            current += timedelta(days=1)
-
-        return count
+        self.pet_forage_job = None
+        self.resume_pet_forage()
 
     def apply_theme(self, refresh_widgets: bool = True):
         theme = self.store.state["theme"]
@@ -428,6 +386,12 @@ class WESI:
             self.style.theme_use("darkly")
 
         colors = theme["colors"]
+        for key, value in colors.items():
+            if key in DEFAULT_STATE["theme"]["colors"]:
+                try:
+                    self.root.winfo_rgb(value)
+                except TclError:
+                    colors[key] = DEFAULT_STATE["theme"]["colors"][key]
         self.root.configure(bg=colors["bg"])
 
         if refresh_widgets:
@@ -559,7 +523,7 @@ class WESI:
     def open_settings_dialog(self):
         dialog = tb.Toplevel(self.root)
         dialog.title("设置")
-        dialog.geometry("440x340")
+        dialog.geometry("440x440")
         dialog.transient(self.root)
         dialog.grab_set()
 
@@ -569,14 +533,18 @@ class WESI:
         income = self.store.state.setdefault("income", {})
 
         salary_var = tb.StringVar(value=str(income.get("monthly_net_salary", 2600.0)))
-        weekly_hours_var = tb.StringVar(value=str(income.get("weekly_work_hours", 40.0)))
+        work_start_var = tb.StringVar(value=income["work_start"])
+        work_end_var = tb.StringVar(value=income["work_end"])
         start_var = tb.StringVar(value=income.get("employment_start", "2026-04-01 00:00:00"))
 
         tb.Label(main, text="月净收入 (€)").pack(anchor=W)
         tb.Entry(main, textvariable=salary_var).pack(fill=X, pady=(6, 12))
 
-        tb.Label(main, text="每周工作时间 (h)").pack(anchor=W)
-        tb.Entry(main, textvariable=weekly_hours_var).pack(fill=X, pady=(6, 12))
+        tb.Label(main, text="上班时间 (HH:MM)").pack(anchor=W)
+        tb.Entry(main, textvariable=work_start_var).pack(fill=X, pady=(6, 12))
+        tb.Label(main, text="下班时间 (HH:MM)").pack(anchor=W)
+        tb.Entry(main, textvariable=work_end_var).pack(fill=X, pady=(6, 12))
+        tb.Label(main, text="周一至周五，当日班次；收入按平均工作日估算。", wraplength=400).pack(anchor=W)
 
         tb.Label(main, text="入职时间 (YYYY-MM-DD HH:MM:SS)").pack(anchor=W)
         tb.Entry(main, textvariable=start_var).pack(fill=X, pady=(6, 12))
@@ -584,27 +552,28 @@ class WESI:
         def save_settings():
             try:
                 salary = float(salary_var.get().strip())
-                weekly_hours = float(weekly_hours_var.get().strip())
+                work_start = work_start_var.get().strip()
+                work_end = work_end_var.get().strip()
+                begin, finish = validate_schedule(work_start, work_end)
+                weekly_hours = ((finish.hour * 60 + finish.minute) - (begin.hour * 60 + begin.minute)) / 60 * 5
                 start_text = start_var.get().strip()
-
-                if salary <= 0 or weekly_hours <= 0:
-                    raise ValueError
-
-                parse_dt(start_text)
+                validate_income(salary, weekly_hours, start_text)
 
                 self.store.state["income"]["monthly_net_salary"] = salary
                 self.store.state["income"]["weekly_work_hours"] = weekly_hours
                 self.store.state["income"]["employment_start"] = start_text
+                self.store.state["income"]["work_start"] = begin.strftime("%H:%M")
+                self.store.state["income"]["work_end"] = finish.strftime("%H:%M")
 
                 self.store.save()
+                self.last_income_snapshot = None
                 self.flash_status("设置已保存。工资流速已更新。")
                 dialog.destroy()
 
-            except Exception:
+            except ValueError as exc:
                 Messagebox.ok(
-                    "请输入正确格式：\n\n"
-                    "月净收入：数字，例如 2660\n"
-                    "每周工作时间：数字，例如 40\n"
+                    f"{exc}\n\n月净收入：有限的正数，例如 2660\n"
+                    "上下班时间：HH:MM，下班晚于上班\n"
                     "入职时间：YYYY-MM-DD HH:MM:SS",
                     "输入错误"
                 )
@@ -616,51 +585,7 @@ class WESI:
         tb.Button(btn_row, text="取消", command=dialog.destroy).pack(side=RIGHT, padx=(0, 8))
 
     def get_income_stats(self) -> Dict[str, Any]:
-        now = datetime.now()
-
-        income = self.store.state["income"]
-        salary = float(income.get("monthly_net_salary", 2600.0))
-        weekly_hours = float(income.get("weekly_work_hours", 40.0))
-        start = parse_dt(income.get("employment_start", "2026-04-01 00:00:00"))
-
-        monthly_work_hours = weekly_hours * 52 / 12
-        daily_work_hours = weekly_hours / 5
-
-        hourly_rate = salary / monthly_work_hours if monthly_work_hours > 0 else 0.0
-        rate = hourly_rate / 3600
-        daily_target = hourly_rate * daily_work_hours
-
-        if now < start:
-            return {
-                "rate": rate,
-                "joined": 0.0,
-                "year": 0.0,
-                "month": 0.0,
-                "today": 0.0,
-                "daily_target": daily_target,
-            }
-
-        today_date = now.date()
-
-        if now.weekday() < 5:
-            elapsed_seconds = (now - day_start(now)).total_seconds()
-            ratio = min(elapsed_seconds / (24 * 3600), 1.0)
-            today_income = daily_target * ratio
-        else:
-            today_income = 0.0
-
-        month_workdays = self.count_workdays(month_start(now).date(), today_date)
-        year_workdays = self.count_workdays(year_start(now).date(), today_date)
-        joined_workdays = self.count_workdays(start.date(), today_date)
-
-        return {
-            "rate": rate,
-            "today": today_income,
-            "month": month_workdays * daily_target + today_income,
-            "year": year_workdays * daily_target + today_income,
-            "joined": joined_workdays * daily_target + today_income,
-            "daily_target": daily_target,
-        }
+        return calculate_income(self.store.state["income"])
 
     def update_income_ui(self):
         stats = self.get_income_stats()
@@ -672,7 +597,7 @@ class WESI:
         progress_percent = progress * 100
         remain = max(0.0, daily_target - today)
 
-        recovered_since_last = max(0.0, today - self.last_income_snapshot)
+        recovered_since_last = 0.0 if self.last_income_snapshot is None else max(0.0, today - self.last_income_snapshot)
         self.last_income_snapshot = today
 
         self.today_recovery_label.configure(
@@ -692,10 +617,10 @@ class WESI:
         self.joined_label.configure(text=f"入职以来总回收：€ {stats['joined']:.2f}")
 
         self._refresh_color_overrides()
-        self.increment_achievement_check()
+        self.increment_achievement_check(stats)
         self._tick_status_messages(stats, daily_target, remain)
 
-        self.root.after(1000, self.update_income_ui)
+        self.income_job = self.root.after(1000, self.update_income_ui)
 
     def _tick_status_messages(self, stats: Dict[str, Any], daily_target: float, remain: float):
         now_ts = time.time()
@@ -765,7 +690,8 @@ class WESI:
         self.windows[key] = win
 
         def _cleanup(_event=None, _key=key):
-            self.windows.pop(_key, None)
+            if _event is not None and _event.widget is win:
+                self.windows.pop(_key, None)
 
         win.bind("<Destroy>", _cleanup)
         return win
@@ -785,6 +711,60 @@ class WESI:
     def open_pet(self):
         self._open_or_focus("pet", PetWindow)
 
+    def _refresh_pet_window(self):
+        window = self.windows.get("pet")
+        if window is not None and window.winfo_exists():
+            window.refresh()
+
+    def start_pet_forage(self):
+        pet = self.store.state["pet"]
+        if pet.get("next_forage_at"):
+            return
+        pet["next_forage_at"] = (datetime.now() + timedelta(seconds=random.randint(6, 14))).strftime("%Y-%m-%d %H:%M:%S")
+        self.store.save()
+        self.resume_pet_forage()
+        self._refresh_pet_window()
+
+    def resume_pet_forage(self):
+        due = self.store.state["pet"].get("next_forage_at")
+        if not due:
+            return
+        try:
+            delay = max(0.0, (parse_dt(due) - datetime.now()).total_seconds())
+        except (ValueError, TypeError):
+            self.store.state["pet"]["next_forage_at"] = None
+            self.store.save()
+            return
+        if self.pet_forage_job is not None:
+            self.root.after_cancel(self.pet_forage_job)
+        self.pet_forage_job = self.root.after(int(min(delay, 14) * 1000), self.finish_pet_forage)
+
+    def finish_pet_forage(self):
+        pet = self.store.state["pet"]
+        if not pet.get("next_forage_at"):
+            return
+        if self.pet_forage_job is not None:
+            self.root.after_cancel(self.pet_forage_job)
+            self.pet_forage_job = None
+        pet["next_forage_at"] = None
+        pet["forage_count"] += 1
+        pet["affinity"] += 1
+        if random.random() < 0.7:
+            item = choose_weighted(self.pet_items)
+            entry = {"time": format_now(), "kind": "loot", "name": item["name"],
+                     "rarity": item["rarity"], "desc": item["desc"]}
+            pet["history"].append(entry)
+            pet["inventory"].append(entry)
+            self.flash_status(f"宠物捡到了：{item['name']}")
+        else:
+            entry = {"time": format_now(), "kind": "encounter", "story": random.choice(self.pet_events)}
+            pet["history"].append(entry)
+            pet["encounters"].append(entry)
+            self.flash_status("宠物带回了一段相遇。")
+        self.store.save()
+        self.increment_achievement_check()
+        self._refresh_pet_window()
+
     def open_achievements(self):
         self._open_or_focus("achievements", AchievementWindow)
 
@@ -797,8 +777,8 @@ class WESI:
         self.store.save()
         self.flash_status(f"成就解锁：{name}", seconds=8)
 
-    def increment_achievement_check(self):
-        stats = self.get_income_stats()
+    def increment_achievement_check(self, stats=None):
+        stats = self.get_income_stats() if stats is None else stats
         joined = stats["joined"]
         battle = self.store.state["battle"]["stats"]
         pet = self.store.state["pet"]
@@ -824,6 +804,10 @@ class WESI:
     def on_close(self):
         self.store.state["income"]["window_geometry"] = self.root.geometry()
         self.store.save()
+        if getattr(self, "income_job", None):
+            self.root.after_cancel(self.income_job)
+        if getattr(self, "pet_forage_job", None):
+            self.root.after_cancel(self.pet_forage_job)
         self.root.destroy()
 
     def run(self):

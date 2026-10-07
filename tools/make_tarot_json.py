@@ -1,8 +1,9 @@
 import json
 from pathlib import Path
 
-INPUT_FILE = Path("data/tarot-images.json")
-OUTPUT_FILE = Path("data/tarot_cards_zh.json")
+PROJECT_DIR = Path(__file__).resolve().parents[1]
+INPUT_FILE = PROJECT_DIR / "data/tarot-images.json"
+OUTPUT_FILE = PROJECT_DIR / "data/tarot_cards_zh.json"
 
 MAJOR_ARCANA = {
     "The Fool": {
@@ -177,17 +178,16 @@ def make_minor_arcana_translation(name_en: str, suit: str):
     return name_zh, keywords, desc
 
 
-def main():
-    with open(INPUT_FILE, "r", encoding="utf-8") as f:
-        src = json.load(f)
-
+def convert_cards(src):
+    """Normalize the bundled deck or the optional image-enriched deck."""
     out_cards = []
 
     for card in src["cards"]:
         name_en = card["name"]
         arcana_raw = card["arcana"]
         suit = card.get("suit")
-        img = card.get("img")
+        prefix = {"Cups": "c", "Swords": "s", "Wands": "w", "Pentacles": "p"}.get(suit, "m")
+        img = card.get("img") or f"{prefix}{int(card['number']):02d}.jpg"
 
         if arcana_raw == "Major Arcana":
             extra = MAJOR_ARCANA[name_en]
@@ -212,15 +212,20 @@ def main():
                 "img": img
             })
 
-    result = {
-        "description": "Tarot deck with Chinese translations, keywords, descriptions, and image mapping.",
-        "cards": out_cards
-    }
+    return out_cards
 
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        json.dump(result, f, ensure_ascii=False, indent=2)
 
-    print(f"Done: {OUTPUT_FILE}")
+def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="Build WESI's translated tarot deck.")
+    parser.add_argument("--input", type=Path, default=INPUT_FILE if INPUT_FILE.exists() else PROJECT_DIR / "data/tarot.json")
+    parser.add_argument("--output", type=Path, default=OUTPUT_FILE)
+    args = parser.parse_args()
+    with args.input.open(encoding="utf-8") as stream:
+        cards = convert_cards(json.load(stream))
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps({"cards": cards}, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"Done: {args.output} ({len(cards)} cards)")
 
 
 if __name__ == "__main__":
