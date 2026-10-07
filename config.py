@@ -74,6 +74,12 @@ SPREAD_LABELS = {
 # Defaults / storage
 # =========================
 DEFAULT_STATE: Dict[str, Any] = {
+    "salary_display": {
+        "goal_amount": 10.0,
+        "quiet": False,
+        "collection_date": "",
+        "collected_today": 0.0,
+    },
     "income": {
         "monthly_net_salary": 2600.0,
         "weekly_work_hours": 40.0,

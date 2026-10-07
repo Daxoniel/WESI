@@ -15,6 +15,7 @@ from utils import (
 from tarot_window import TarotWindow
 from quotes_window import QuoteWindow, FavoritesWindow
 from battle_window import BattleWindow
+from salary_panel import SalaryPanel
 
 
 try:
@@ -29,7 +30,7 @@ try:
     import ttkbootstrap as tb
     from ttkbootstrap.constants import *
     from ttkbootstrap.dialogs import Messagebox
-    from ttkbootstrap.widgets.scrolled import ScrolledText
+    from ttkbootstrap.widgets.scrolled import ScrolledText, ScrolledFrame
 except Exception as exc:
     raise SystemExit(
         "This program requires ttkbootstrap.\n"
@@ -356,6 +357,7 @@ class WESI:
         self.root = self.style.master
         self.root.title(APP_TITLE)
         self.root.geometry(self.store.state["income"].get("window_geometry", "760x860+120+80"))
+        self.root.minsize(540, min(800, self.root.winfo_screenheight()-80))
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
 
         self.status_locked_until = None
@@ -406,20 +408,18 @@ class WESI:
             self.joined_label,
             self.year_label,
             self.month_label,
-            self.today_label,
             self.rate_label,
             self.tick_label,
-            self.today_recovery_label,
         ]:
             label.configure(foreground=money)
 
         self.status_label.configure(foreground=status)
 
     def build_ui(self):
-        self.main = tb.Frame(self.root, padding=16)
+        self.main = ScrolledFrame(self.root, padding=16, autohide=True)
         self.main.pack(fill=BOTH, expand=True)
 
-        self.header_card = tb.Labelframe(self.main, text="今日价值回收", padding=14)
+        self.header_card = tb.Labelframe(self.main, text="今日价值回收", padding=10)
         self.header_card.pack(fill=X, pady=(0, 12))
 
         top = tb.Frame(self.header_card)
@@ -434,55 +434,40 @@ class WESI:
         tb.Button(top, text="主题", command=self.open_theme_dialog).pack(side=RIGHT, padx=(8, 0))
         tb.Button(top, text="设置", command=self.open_settings_dialog).pack(side=RIGHT)
 
-        self.today_recovery_label = tb.Label(
-            self.header_card,
-            text="今日回血：€0.00 / €0.00",
-            font=("Segoe UI", 20, "bold")
-        )
-        self.today_recovery_label.pack(anchor=W, pady=(16, 8))
-
-        self.today_progress_bar = tb.Progressbar(
-            self.header_card,
-            maximum=100,
-            value=0,
-            bootstyle="success-striped"
-        )
-        self.today_progress_bar.pack(fill=X, pady=(0, 8))
+        self.salary_panel = SalaryPanel(self.header_card, self)
+        self.salary_panel.pack(fill=X, pady=(12, 0))
 
         self.today_progress_text = tb.Label(
             self.header_card,
             text="今日进度：0.0%    剩余：€0.00",
             font=("Segoe UI", 10)
         )
-        self.today_progress_text.pack(anchor=W)
+        self.today_progress_text.pack(anchor=W, pady=(8, 0))
 
-        self.money_card = tb.Labelframe(self.main, text="金币回收记录", padding=12)
+        self.money_card = tb.Labelframe(self.main, text="累计估算", padding=8)
         self.money_card.pack(fill=X, pady=(0, 12))
 
         self.rate_label = tb.Label(
             self.money_card,
             text="当前流速：€0.000000 / 秒",
-            font=("Consolas", 15, "bold")
+            font=("Consolas", 10, "bold")
         )
-        self.rate_label.pack(anchor=W, pady=(0, 8))
+        self.rate_label.pack(anchor=W, pady=(0, 2))
 
         self.tick_label = tb.Label(
             self.money_card,
             text="刚刚回收：+€0.00",
-            font=("Consolas", 15, "bold")
+            font=("Consolas", 10)
         )
-        self.tick_label.pack(anchor=W, pady=(0, 8))
+        self.tick_label.pack(anchor=W, pady=(0, 2))
 
-        self.today_label = tb.Label(self.money_card, text="", font=("Consolas", 13, "bold"))
-        self.today_label.pack(anchor=W, pady=2)
-
-        self.month_label = tb.Label(self.money_card, text="", font=("Consolas", 13, "bold"))
+        self.month_label = tb.Label(self.money_card, text="", font=("Consolas", 10))
         self.month_label.pack(anchor=W, pady=2)
 
-        self.year_label = tb.Label(self.money_card, text="", font=("Consolas", 13, "bold"))
+        self.year_label = tb.Label(self.money_card, text="", font=("Consolas", 10))
         self.year_label.pack(anchor=W, pady=2)
 
-        self.joined_label = tb.Label(self.money_card, text="", font=("Consolas", 13, "bold"))
+        self.joined_label = tb.Label(self.money_card, text="", font=("Consolas", 10))
         self.joined_label.pack(anchor=W, pady=2)
 
         self.actions_card = tb.Labelframe(self.main, text="互动", padding=12)
@@ -589,6 +574,7 @@ class WESI:
 
     def update_income_ui(self):
         stats = self.get_income_stats()
+        self.salary_panel.update_stats(stats)
 
         daily_target = float(stats.get("daily_target", 100.0))
         today = stats["today"]
@@ -600,10 +586,6 @@ class WESI:
         recovered_since_last = 0.0 if self.last_income_snapshot is None else max(0.0, today - self.last_income_snapshot)
         self.last_income_snapshot = today
 
-        self.today_recovery_label.configure(
-            text=f"今日回血：€{today:.2f} / €{daily_target:.2f}"
-        )
-        self.today_progress_bar.configure(value=progress_percent)
         self.today_progress_text.configure(
             text=f"今日进度：{progress_percent:.1f}%    剩余：€{remain:.2f}"
         )
@@ -611,7 +593,6 @@ class WESI:
         self.rate_label.configure(text=f"当前价值流速：€ {stats['rate']:.6f} / 秒")
         self.tick_label.configure(text=f"刚刚回收：+€ {recovered_since_last:.4f}")
 
-        self.today_label.configure(text=f"今日已回收：€ {stats['today']:.2f}")
         self.month_label.configure(text=f"本月已回收：€ {stats['month']:.2f}")
         self.year_label.configure(text=f"今年已回收：€ {stats['year']:.2f}")
         self.joined_label.configure(text=f"入职以来总回收：€ {stats['joined']:.2f}")
@@ -808,6 +789,7 @@ class WESI:
             self.root.after_cancel(self.income_job)
         if getattr(self, "pet_forage_job", None):
             self.root.after_cancel(self.pet_forage_job)
+        self.salary_panel.destroy()
         self.root.destroy()
 
     def run(self):
