@@ -1,0 +1,89 @@
+{
+  "income": {
+    "monthly_net_salary": 2690.0,
+    "employment_start": "2025-11-19 00:00:00",
+    "window_geometry": "520x746+3086+159",
+    "weekly_work_hours": 40.0
+  },
+  "theme": {
+    "name": "cyborg",
+    "colors": {
+      "accent": "#5dd6ff",
+      "money": "#37f2a3",
+      "card_bg": "#171a21",
+      "status": "#8aa4c8",
+      "bg": "#0f1115"
+    }
+  },
+  "battle": {
+    "default_target": "Boss",
+    "targets": [
+      {
+        "name": "Boss",
+        "avatar": "\\\\192.168.40.17\\home\\WESI\\assets\\avatars\\1784883801_Screenshot 2026-04-01 093101.png"
+      },
+      {
+        "name": "Weekly Meeting",
+        "avatar": ""
+      },
+      {
+        "name": "KPI",
+        "avatar": ""
+      }
+    ],
+    "stats": {
+      "total_hits": 51,
+      "kills": 8,
+      "sessions": 21
+    }
+  },
+  "quotes": {
+    "all": [],
+    "favorites": [],
+    "last_index": -1
+  },
+  "pet": {
+    "name": "Mochi",
+    "image_path": "",
+    "mood": "neutral",
+    "affinity": 0,
+    "forage_count": 0,
+    "history": [],
+    "inventory": [],
+    "encounters": [],
+    "next_forage_at": null
+  },
+  "tarot": {
+    "history": [],
+    "last_draw_at": null
+  },
+  "achievements": {
+    "unlocked": [
+      {
+        "name": "第一桶金",
+        "desc": "累计收入达到 €1,000。",
+        "time": "2026-04-28 10:24:25"
+      },
+      {
+        "name": "小小发泄",
+        "desc": "累计攻击达到 10 次。",
+        "time": "2026-04-28 10:25:06"
+      },
+      {
+        "name": "会议屠戮者",
+        "desc": "累计击败 3 个目标。",
+        "time": "2026-04-28 10:25:13"
+      },
+      {
+        "name": "稳定输出",
+        "desc": "累计收入达到 €5,000。",
+        "time": "2026-04-28 10:25:50"
+      },
+      {
+        "name": "资本开始说话",
+        "desc": "累计收入达到 €10,000。",
+        "time": "2026-04-28 10:25:50"
+      }
+    ]
+  }
+}

@@ -1,0 +1,3491 @@
+[
+  {
+    "time": "2026-04-02 09:24:16",
+    "question": "今天开会会被骂吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑王后",
+        "name_en": "Queen of Swords",
+        "reversed": true,
+        "img": "s13.jpg",
+        "desc": "逆位视角：宝剑领域中的内化、掌控与滋养",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-02 16:21:24",
+    "question": "预测周五周六周日三天旅行",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "愚者",
+        "name_en": "The Fool",
+        "reversed": false,
+        "img": "m00.jpg",
+        "desc": "新的起点，未知的旅程",
+        "keywords": [
+          "开始",
+          "冒险",
+          "自由"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "圣杯五",
+        "name_en": "Five of Cups",
+        "reversed": false,
+        "img": "c05.jpg",
+        "desc": "圣杯领域中的冲突、缺失或不安",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "宝剑二",
+        "name_en": "Two of Swords",
+        "reversed": true,
+        "img": "s02.jpg",
+        "desc": "逆位视角：宝剑领域中的平衡、选择与互动",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-08 06:29:20",
+    "question": "今天会被老傻逼找茬吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖七",
+        "name_en": "Seven of Wands",
+        "reversed": true,
+        "img": "w07.jpg",
+        "desc": "逆位视角：权杖领域中的评估、挑战与坚持",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-09 13:33:53",
+    "question": "我能在短期内找到合适的工作吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "太阳",
+        "name_en": "The Sun",
+        "reversed": true,
+        "img": "m19.jpg",
+        "desc": "逆位视角：清晰与生命力",
+        "keywords": [
+          "成功",
+          "快乐",
+          "能量"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-10 06:39:40",
+    "question": "今天会顺利吗，开会，约会",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖二",
+        "name_en": "Two of Wands",
+        "reversed": false,
+        "img": "w02.jpg",
+        "desc": "权杖领域中的平衡、选择与互动",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-10 08:31:44",
+    "question": "我已经厌倦了无趣的183，还有可能继续联系吗",
+    "spread": "relationship",
+    "cards": [
+      {
+        "position": "你",
+        "name_zh": "圣杯六",
+        "name_en": "Six of Cups",
+        "reversed": true,
+        "img": "c06.jpg",
+        "desc": "逆位视角：圣杯领域中的过渡、调整与回流",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      },
+      {
+        "position": "对方",
+        "name_zh": "皇后",
+        "name_en": "The Empress",
+        "reversed": false,
+        "img": "m03.jpg",
+        "desc": "生命力与成长",
+        "keywords": [
+          "丰盛",
+          "滋养",
+          "创造"
+        ]
+      },
+      {
+        "position": "关系",
+        "name_zh": "宝剑九",
+        "name_en": "Nine of Swords",
+        "reversed": true,
+        "img": "s09.jpg",
+        "desc": "逆位视角：宝剑领域中的成熟、收获与临界点",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-10 08:34:29",
+    "question": "软件上看到的那个好看的人，只靠每隔几天回复我一句话，还有希望发展吗",
+    "spread": "relationship",
+    "cards": [
+      {
+        "position": "你",
+        "name_zh": "高塔",
+        "name_en": "The Tower",
+        "reversed": true,
+        "img": "m16.jpg",
+        "desc": "逆位视角：突然的改变",
+        "keywords": [
+          "崩塌",
+          "冲击",
+          "觉醒"
+        ]
+      },
+      {
+        "position": "对方",
+        "name_zh": "星币九",
+        "name_en": "Nine of Pentacles",
+        "reversed": true,
+        "img": "p09.jpg",
+        "desc": "逆位视角：星币领域中的成熟、收获与临界点",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      },
+      {
+        "position": "关系",
+        "name_zh": "星币五",
+        "name_en": "Five of Pentacles",
+        "reversed": true,
+        "img": "p05.jpg",
+        "desc": "逆位视角：星币领域中的冲突、缺失或不安",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-10 08:40:41",
+    "question": "我的感情生活今后会顺利吗",
+    "spread": "choice",
+    "cards": [
+      {
+        "position": "选项A",
+        "name_zh": "恋人",
+        "name_en": "The Lovers",
+        "reversed": false,
+        "img": "m06.jpg",
+        "desc": "情感与抉择",
+        "keywords": [
+          "选择",
+          "关系",
+          "连接"
+        ]
+      },
+      {
+        "position": "选项B",
+        "name_zh": "宝剑十",
+        "name_en": "Ten of Swords",
+        "reversed": true,
+        "img": "s10.jpg",
+        "desc": "逆位视角：宝剑领域中的完成、满溢或终局",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-10 09:04:56",
+    "question": "帮我算莱欧洛克斯的关系问题，诚心帮忙",
+    "spread": "relationship",
+    "cards": [
+      {
+        "position": "你",
+        "name_zh": "世界",
+        "name_en": "The World",
+        "reversed": true,
+        "img": "m21.jpg",
+        "desc": "逆位视角：阶段的终结与完成",
+        "keywords": [
+          "完成",
+          "整合",
+          "圆满"
+        ]
+      },
+      {
+        "position": "对方",
+        "name_zh": "星币骑士",
+        "name_en": "Knight of Pentacles",
+        "reversed": true,
+        "img": "p12.jpg",
+        "desc": "逆位视角：星币领域中的推进、行动与冲劲",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      },
+      {
+        "position": "关系",
+        "name_zh": "隐者",
+        "name_en": "The Hermit",
+        "reversed": false,
+        "img": "m09.jpg",
+        "desc": "向内探索",
+        "keywords": [
+          "独处",
+          "思考",
+          "寻找"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-10 10:10:52",
+    "question": "帮女性朋友测试桃花运。要专注",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "宝剑七",
+        "name_en": "Seven of Swords",
+        "reversed": false,
+        "img": "s07.jpg",
+        "desc": "宝剑领域中的评估、挑战与坚持",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "权杖侍从",
+        "name_en": "Page of Wands",
+        "reversed": false,
+        "img": "w11.jpg",
+        "desc": "权杖领域中的信息、起步与学习",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "星币国王",
+        "name_en": "King of Pentacles",
+        "reversed": true,
+        "img": "p14.jpg",
+        "desc": "逆位视角：星币领域中的成熟、主导与定型",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-14 07:54:38",
+    "question": "我和张子涵会有怎样的发展",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "魔术师",
+        "name_en": "The Magician",
+        "reversed": false,
+        "img": "m01.jpg",
+        "desc": "意志与行动的结合",
+        "keywords": [
+          "行动",
+          "创造",
+          "掌控"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "女祭司",
+        "name_en": "The High Priestess",
+        "reversed": true,
+        "img": "m02.jpg",
+        "desc": "逆位视角：内心的声音与隐藏知识",
+        "keywords": [
+          "直觉",
+          "神秘",
+          "内在"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "星币七",
+        "name_en": "Seven of Pentacles",
+        "reversed": false,
+        "img": "p07.jpg",
+        "desc": "星币领域中的评估、挑战与坚持",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-15 07:45:55",
+    "question": "我和张子涵的见面会是怎样的",
+    "spread": "choice",
+    "cards": [
+      {
+        "position": "选项A",
+        "name_zh": "审判",
+        "name_en": "Judgement",
+        "reversed": true,
+        "img": "m20.jpg",
+        "desc": "逆位视角：自我觉察",
+        "keywords": [
+          "觉醒",
+          "复苏",
+          "评判"
+        ]
+      },
+      {
+        "position": "选项B",
+        "name_zh": "星币八",
+        "name_en": "Eight of Pentacles",
+        "reversed": true,
+        "img": "p08.jpg",
+        "desc": "逆位视角：星币领域中的推进、专注与修炼",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-15 07:56:53",
+    "question": "我和张子涵的见面会是怎样的",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖一",
+        "name_en": "Ace of Wands",
+        "reversed": true,
+        "img": "w01.jpg",
+        "desc": "逆位视角：权杖领域中的新的开端，能量初现",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-16 07:29:43",
+    "question": "搞错了人名，是我和张涵之的发展会是怎样的呢",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "宝剑骑士",
+        "name_en": "Knight of Swords",
+        "reversed": false,
+        "img": "s12.jpg",
+        "desc": "宝剑领域中的推进、行动与冲劲",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "太阳",
+        "name_en": "The Sun",
+        "reversed": false,
+        "img": "m19.jpg",
+        "desc": "清晰与生命力",
+        "keywords": [
+          "成功",
+          "快乐",
+          "能量"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "恶魔",
+        "name_en": "The Devil",
+        "reversed": false,
+        "img": "m15.jpg",
+        "desc": "被困与执念",
+        "keywords": [
+          "束缚",
+          "欲望",
+          "依赖"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-16 13:23:01",
+    "question": "张涵之是否会喜欢我的外貌和身材",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖九",
+        "name_en": "Nine of Wands",
+        "reversed": false,
+        "img": "w09.jpg",
+        "desc": "权杖领域中的成熟、收获与临界点",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-20 16:16:05",
+    "question": "我和张涵之还会见面吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑一",
+        "name_en": "Ace of Swords",
+        "reversed": false,
+        "img": "s01.jpg",
+        "desc": "宝剑领域中的新的开端，能量初现",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-21 07:11:00",
+    "question": "我陷入了对未来获得幸福的疑惑，怀疑我是否这辈子还能找到真爱，我现在很难受，我真的还有希望吗",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "月亮",
+        "name_en": "The Moon",
+        "reversed": false,
+        "img": "m18.jpg",
+        "desc": "未知与幻想",
+        "keywords": [
+          "迷惑",
+          "潜意识",
+          "不安"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "星币五",
+        "name_en": "Five of Pentacles",
+        "reversed": false,
+        "img": "p05.jpg",
+        "desc": "星币领域中的冲突、缺失或不安",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "星币九",
+        "name_en": "Nine of Pentacles",
+        "reversed": false,
+        "img": "p09.jpg",
+        "desc": "星币领域中的成熟、收获与临界点",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-22 12:58:45",
+    "question": "我的健身之路会怎么样呢，最终我能变成心中完美的样子吗？",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "恶魔",
+        "name_en": "The Devil",
+        "reversed": false,
+        "img": "m15.jpg",
+        "desc": "被困与执念",
+        "keywords": [
+          "束缚",
+          "欲望",
+          "依赖"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "命运之轮",
+        "name_en": "Wheel of Fortune",
+        "reversed": true,
+        "img": "m10.jpg",
+        "desc": "逆位视角：不可控的转变",
+        "keywords": [
+          "变化",
+          "循环",
+          "命运"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "星币六",
+        "name_en": "Six of Pentacles",
+        "reversed": true,
+        "img": "p06.jpg",
+        "desc": "逆位视角：星币领域中的过渡、调整与回流",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-22 13:16:45",
+    "question": "我的健身之路会怎么样呢，最终我能变成心中完美的样子吗？",
+    "spread": "choice",
+    "cards": [
+      {
+        "position": "选项A",
+        "name_zh": "权杖骑士",
+        "name_en": "Knight of Wands",
+        "reversed": true,
+        "img": "w12.jpg",
+        "desc": "逆位视角：权杖领域中的推进、行动与冲劲",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      },
+      {
+        "position": "选项B",
+        "name_zh": "星星",
+        "name_en": "The Star",
+        "reversed": false,
+        "img": "m17.jpg",
+        "desc": "黑暗中的光",
+        "keywords": [
+          "希望",
+          "治愈",
+          "指引"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-22 13:36:22",
+    "question": "我和期待的恋爱对象的关系，这个问题很抽象，因为他还没出现在我的生活中，我能能量能占卜出吗，试试吧",
+    "spread": "relationship",
+    "cards": [
+      {
+        "position": "你",
+        "name_zh": "宝剑七",
+        "name_en": "Seven of Swords",
+        "reversed": false,
+        "img": "s07.jpg",
+        "desc": "宝剑领域中的评估、挑战与坚持",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      },
+      {
+        "position": "对方",
+        "name_zh": "星币三",
+        "name_en": "Three of Pentacles",
+        "reversed": false,
+        "img": "p03.jpg",
+        "desc": "星币领域中的成长、合作与扩展",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      },
+      {
+        "position": "关系",
+        "name_zh": "圣杯六",
+        "name_en": "Six of Cups",
+        "reversed": true,
+        "img": "c06.jpg",
+        "desc": "逆位视角：圣杯领域中的过渡、调整与回流",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-22 13:41:27",
+    "question": "我能活得简单点嘛",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币九",
+        "name_en": "Nine of Pentacles",
+        "reversed": false,
+        "img": "p09.jpg",
+        "desc": "星币领域中的成熟、收获与临界点",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-22 13:48:20",
+    "question": "我知道今天能量已经耗的差不多了，但是我想知道我会过上我理想中的生活嘛？",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "星币二",
+        "name_en": "Two of Pentacles",
+        "reversed": true,
+        "img": "p02.jpg",
+        "desc": "逆位视角：星币领域中的平衡、选择与互动",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "星币四",
+        "name_en": "Four of Pentacles",
+        "reversed": false,
+        "img": "p04.jpg",
+        "desc": "星币领域中的稳定、停滞或守成",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "星币八",
+        "name_en": "Eight of Pentacles",
+        "reversed": false,
+        "img": "p08.jpg",
+        "desc": "星币领域中的推进、专注与修炼",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-22 14:01:24",
+    "question": "测试，不要动用能量",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "星币四",
+        "name_en": "Four of Pentacles",
+        "reversed": false,
+        "img": "p04.jpg",
+        "desc": "星币领域中的稳定、停滞或守成",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "死神",
+        "name_en": "Death",
+        "reversed": false,
+        "img": "m13.jpg",
+        "desc": "旧的结束带来新的开始",
+        "keywords": [
+          "结束",
+          "转变",
+          "重生"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "高塔",
+        "name_en": "The Tower",
+        "reversed": true,
+        "img": "m16.jpg",
+        "desc": "逆位视角：突然的改变",
+        "keywords": [
+          "崩塌",
+          "冲击",
+          "觉醒"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-22 14:01:56",
+    "question": "测试，不要动用能量",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "太阳",
+        "name_en": "The Sun",
+        "reversed": true,
+        "img": "m19.jpg",
+        "desc": "逆位视角：清晰与生命力",
+        "keywords": [
+          "成功",
+          "快乐",
+          "能量"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "星币七",
+        "name_en": "Seven of Pentacles",
+        "reversed": true,
+        "img": "p07.jpg",
+        "desc": "逆位视角：星币领域中的评估、挑战与坚持",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "圣杯王后",
+        "name_en": "Queen of Cups",
+        "reversed": true,
+        "img": "c13.jpg",
+        "desc": "逆位视角：圣杯领域中的内化、掌控与滋养",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-22 14:16:47",
+    "question": "测试",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "圣杯七",
+        "name_en": "Seven of Cups",
+        "reversed": true,
+        "img": "c07.jpg",
+        "desc": "逆位视角：圣杯领域中的评估、挑战与坚持",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "节制",
+        "name_en": "Temperance",
+        "reversed": false,
+        "img": "m14.jpg",
+        "desc": "中庸与整合",
+        "keywords": [
+          "平衡",
+          "融合",
+          "调和"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "教皇",
+        "name_en": "The Hierophant",
+        "reversed": true,
+        "img": "m05.jpg",
+        "desc": "逆位视角：社会规则与精神指引",
+        "keywords": [
+          "传统",
+          "信仰",
+          "规范"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-24 10:58:28",
+    "question": "明天慕尼黑之旅会开心顺利吗？会遇到有意思的人吗？",
+    "spread": "choice",
+    "cards": [
+      {
+        "position": "选项A",
+        "name_zh": "星币六",
+        "name_en": "Six of Pentacles",
+        "reversed": false,
+        "img": "p06.jpg",
+        "desc": "星币领域中的过渡、调整与回流",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      },
+      {
+        "position": "选项B",
+        "name_zh": "倒吊人",
+        "name_en": "The Hanged Man",
+        "reversed": false,
+        "img": "m12.jpg",
+        "desc": "换个角度看世界",
+        "keywords": [
+          "牺牲",
+          "视角",
+          "暂停"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-24 11:01:41",
+    "question": "明天慕尼黑之旅会开心顺利吗？会遇到有意思的人吗？",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "圣杯六",
+        "name_en": "Six of Cups",
+        "reversed": true,
+        "img": "c06.jpg",
+        "desc": "逆位视角：圣杯领域中的过渡、调整与回流",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-27 09:51:09",
+    "question": "我这周五吃蘑菇去森林体验会怎么样？",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑二",
+        "name_en": "Two of Swords",
+        "reversed": false,
+        "img": "s02.jpg",
+        "desc": "宝剑领域中的平衡、选择与互动",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-27 13:57:05",
+    "question": "杨津是我的命定之人吗？",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "圣杯国王",
+        "name_en": "King of Cups",
+        "reversed": true,
+        "img": "c14.jpg",
+        "desc": "逆位视角：圣杯领域中的成熟、主导与定型",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-27 14:00:06",
+    "question": "我应该采取什么策略更有利和杨津发展关系？",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "圣杯九",
+        "name_en": "Nine of Cups",
+        "reversed": true,
+        "img": "c09.jpg",
+        "desc": "逆位视角：圣杯领域中的成熟、收获与临界点",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-28 15:00:54",
+    "question": "新来的女同事是婊子吗？",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币八",
+        "name_en": "Eight of Pentacles",
+        "reversed": true,
+        "img": "p08.jpg",
+        "desc": "逆位视角：星币领域中的推进、专注与修炼",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-29 11:39:59",
+    "question": "我这次柏林之旅会开心快乐吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "圣杯侍从",
+        "name_en": "Page of Cups",
+        "reversed": true,
+        "img": "c11.jpg",
+        "desc": "逆位视角：圣杯领域中的信息、起步与学习",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-04-29 14:11:03",
+    "question": "我周五能看到野猪吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "倒吊人",
+        "name_en": "The Hanged Man",
+        "reversed": true,
+        "img": "m12.jpg",
+        "desc": "逆位视角：换个角度看世界",
+        "keywords": [
+          "牺牲",
+          "视角",
+          "暂停"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-04 07:26:32",
+    "question": "我要多久可以找回自我",
+    "spread": "choice",
+    "cards": [
+      {
+        "position": "选项A",
+        "name_zh": "宝剑骑士",
+        "name_en": "Knight of Swords",
+        "reversed": true,
+        "img": "s12.jpg",
+        "desc": "逆位视角：宝剑领域中的推进、行动与冲劲",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      },
+      {
+        "position": "选项B",
+        "name_zh": "死神",
+        "name_en": "Death",
+        "reversed": true,
+        "img": "m13.jpg",
+        "desc": "逆位视角：旧的结束带来新的开始",
+        "keywords": [
+          "结束",
+          "转变",
+          "重生"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-12 06:29:29",
+    "question": "周四和杨津会有怎么样的发展呢，我们会有未来的长期关系吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币王后",
+        "name_en": "Queen of Pentacles",
+        "reversed": true,
+        "img": "p13.jpg",
+        "desc": "逆位视角：星币领域中的内化、掌控与滋养",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-12 06:33:08",
+    "question": "我这辈子的命定之人真的已经出现了吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "圣杯国王",
+        "name_en": "King of Cups",
+        "reversed": false,
+        "img": "c14.jpg",
+        "desc": "圣杯领域中的成熟、主导与定型",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-13 09:15:20",
+    "question": "我会在柏林待三天，这三天都会有什么样的体验呢，第一天见杨津，第二天独自逛街或者继续和他，第三天见朱哥",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "权杖二",
+        "name_en": "Two of Wands",
+        "reversed": false,
+        "img": "w02.jpg",
+        "desc": "权杖领域中的平衡、选择与互动",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "宝剑王后",
+        "name_en": "Queen of Swords",
+        "reversed": false,
+        "img": "s13.jpg",
+        "desc": "宝剑领域中的内化、掌控与滋养",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "宝剑骑士",
+        "name_en": "Knight of Swords",
+        "reversed": true,
+        "img": "s12.jpg",
+        "desc": "逆位视角：宝剑领域中的推进、行动与冲劲",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-13 11:46:59",
+    "question": "我不知道",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖国王",
+        "name_en": "King of Wands",
+        "reversed": false,
+        "img": "w14.jpg",
+        "desc": "权杖领域中的成熟、主导与定型",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-18 12:14:00",
+    "question": "柏林之行之后我的人生轨迹发生了怎么样的变化",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖六",
+        "name_en": "Six of Wands",
+        "reversed": false,
+        "img": "w06.jpg",
+        "desc": "权杖领域中的过渡、调整与回流",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-18 12:21:30",
+    "question": "我今年会有怎样的感情生活呢？",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "太阳",
+        "name_en": "The Sun",
+        "reversed": false,
+        "img": "m19.jpg",
+        "desc": "清晰与生命力",
+        "keywords": [
+          "成功",
+          "快乐",
+          "能量"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "圣杯一",
+        "name_en": "Ace of Cups",
+        "reversed": false,
+        "img": "c01.jpg",
+        "desc": "圣杯领域中的新的开端，能量初现",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "女祭司",
+        "name_en": "The High Priestess",
+        "reversed": false,
+        "img": "m02.jpg",
+        "desc": "内心的声音与隐藏知识",
+        "keywords": [
+          "直觉",
+          "神秘",
+          "内在"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-18 13:22:33",
+    "question": "我究竟会变成需求什么样的感情呢",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖九",
+        "name_en": "Nine of Wands",
+        "reversed": false,
+        "img": "w09.jpg",
+        "desc": "权杖领域中的成熟、收获与临界点",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-21 14:15:13",
+    "question": "这周末三天出去玩和待在家有什么不同的感觉呢",
+    "spread": "choice",
+    "cards": [
+      {
+        "position": "选项A",
+        "name_zh": "权杖十",
+        "name_en": "Ten of Wands",
+        "reversed": false,
+        "img": "w10.jpg",
+        "desc": "权杖领域中的完成、满溢或终局",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      },
+      {
+        "position": "选项B",
+        "name_zh": "权杖九",
+        "name_en": "Nine of Wands",
+        "reversed": true,
+        "img": "w09.jpg",
+        "desc": "逆位视角：权杖领域中的成熟、收获与临界点",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-27 13:35:29",
+    "question": "如果我还能见到张涵之，我们会更好的体验相处的感觉吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币十",
+        "name_en": "Ten of Pentacles",
+        "reversed": false,
+        "img": "p10.jpg",
+        "desc": "星币领域中的完成、满溢或终局",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-27 13:44:17",
+    "question": "我和涵之的感情会怎么发展呢",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "高塔",
+        "name_en": "The Tower",
+        "reversed": false,
+        "img": "m16.jpg",
+        "desc": "突然的改变",
+        "keywords": [
+          "崩塌",
+          "冲击",
+          "觉醒"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "权杖九",
+        "name_en": "Nine of Wands",
+        "reversed": false,
+        "img": "w09.jpg",
+        "desc": "权杖领域中的成熟、收获与临界点",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "世界",
+        "name_en": "The World",
+        "reversed": false,
+        "img": "m21.jpg",
+        "desc": "阶段的终结与完成",
+        "keywords": [
+          "完成",
+          "整合",
+          "圆满"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-27 13:45:58",
+    "question": "我和杨津的感情会怎么发展呢",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "星币四",
+        "name_en": "Four of Pentacles",
+        "reversed": true,
+        "img": "p04.jpg",
+        "desc": "逆位视角：星币领域中的稳定、停滞或守成",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "宝剑四",
+        "name_en": "Four of Swords",
+        "reversed": true,
+        "img": "s04.jpg",
+        "desc": "逆位视角：宝剑领域中的稳定、停滞或守成",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "权杖侍从",
+        "name_en": "Page of Wands",
+        "reversed": true,
+        "img": "w11.jpg",
+        "desc": "逆位视角：权杖领域中的信息、起步与学习",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-27 14:34:28",
+    "question": "我能顺利进入莱茵金属吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "圣杯王后",
+        "name_en": "Queen of Cups",
+        "reversed": true,
+        "img": "c13.jpg",
+        "desc": "逆位视角：圣杯领域中的内化、掌控与滋养",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-27 14:46:23",
+    "question": "我和张涵之，会有什么意义？对于我，对于他？",
+    "spread": "relationship",
+    "cards": [
+      {
+        "position": "你",
+        "name_zh": "星币三",
+        "name_en": "Three of Pentacles",
+        "reversed": false,
+        "img": "p03.jpg",
+        "desc": "星币领域中的成长、合作与扩展",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      },
+      {
+        "position": "对方",
+        "name_zh": "高塔",
+        "name_en": "The Tower",
+        "reversed": true,
+        "img": "m16.jpg",
+        "desc": "逆位视角：突然的改变",
+        "keywords": [
+          "崩塌",
+          "冲击",
+          "觉醒"
+        ]
+      },
+      {
+        "position": "关系",
+        "name_zh": "权杖六",
+        "name_en": "Six of Wands",
+        "reversed": true,
+        "img": "w06.jpg",
+        "desc": "逆位视角：权杖领域中的过渡、调整与回流",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-27 14:53:04",
+    "question": "我和杨津会怎么结束呢",
+    "spread": "relationship",
+    "cards": [
+      {
+        "position": "你",
+        "name_zh": "女祭司",
+        "name_en": "The High Priestess",
+        "reversed": false,
+        "img": "m02.jpg",
+        "desc": "内心的声音与隐藏知识",
+        "keywords": [
+          "直觉",
+          "神秘",
+          "内在"
+        ]
+      },
+      {
+        "position": "对方",
+        "name_zh": "宝剑三",
+        "name_en": "Three of Swords",
+        "reversed": false,
+        "img": "s03.jpg",
+        "desc": "宝剑领域中的成长、合作与扩展",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      },
+      {
+        "position": "关系",
+        "name_zh": "星币国王",
+        "name_en": "King of Pentacles",
+        "reversed": false,
+        "img": "p14.jpg",
+        "desc": "星币领域中的成熟、主导与定型",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-28 07:32:42",
+    "question": "我最终会变成酷酷的，美丽，自信，强大，有魅力的人嘛？",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "倒吊人",
+        "name_en": "The Hanged Man",
+        "reversed": true,
+        "img": "m12.jpg",
+        "desc": "逆位视角：换个角度看世界",
+        "keywords": [
+          "牺牲",
+          "视角",
+          "暂停"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "权杖侍从",
+        "name_en": "Page of Wands",
+        "reversed": true,
+        "img": "w11.jpg",
+        "desc": "逆位视角：权杖领域中的信息、起步与学习",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "权杖一",
+        "name_en": "Ace of Wands",
+        "reversed": false,
+        "img": "w01.jpg",
+        "desc": "权杖领域中的新的开端，能量初现",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-29 10:44:29",
+    "question": "我今天能自己打开门吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "圣杯四",
+        "name_en": "Four of Cups",
+        "reversed": false,
+        "img": "c04.jpg",
+        "desc": "圣杯领域中的稳定、停滞或守成",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-29 10:46:07",
+    "question": "我今天能自己打开门吗，强运改写",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "圣杯六",
+        "name_en": "Six of Cups",
+        "reversed": true,
+        "img": "c06.jpg",
+        "desc": "逆位视角：圣杯领域中的过渡、调整与回流",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-05-29 10:47:20",
+    "question": "我今天能自己打开门吗，强运改写，堵上今天所有气运",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑一",
+        "name_en": "Ace of Swords",
+        "reversed": false,
+        "img": "s01.jpg",
+        "desc": "宝剑领域中的新的开端，能量初现",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-01 06:53:53",
+    "question": "六月是非常重要的一个月，我会顺利吗",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "节制",
+        "name_en": "Temperance",
+        "reversed": true,
+        "img": "m14.jpg",
+        "desc": "逆位视角：中庸与整合",
+        "keywords": [
+          "平衡",
+          "融合",
+          "调和"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "女祭司",
+        "name_en": "The High Priestess",
+        "reversed": true,
+        "img": "m02.jpg",
+        "desc": "逆位视角：内心的声音与隐藏知识",
+        "keywords": [
+          "直觉",
+          "神秘",
+          "内在"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "太阳",
+        "name_en": "The Sun",
+        "reversed": true,
+        "img": "m19.jpg",
+        "desc": "逆位视角：清晰与生命力",
+        "keywords": [
+          "成功",
+          "快乐",
+          "能量"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-02 14:24:25",
+    "question": "今天面试感觉怎么样",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "圣杯六",
+        "name_en": "Six of Cups",
+        "reversed": false,
+        "img": "c06.jpg",
+        "desc": "圣杯领域中的过渡、调整与回流",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-03 07:21:54",
+    "question": "我还能找回我的外套吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "节制",
+        "name_en": "Temperance",
+        "reversed": false,
+        "img": "m14.jpg",
+        "desc": "中庸与整合",
+        "keywords": [
+          "平衡",
+          "融合",
+          "调和"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-03 11:15:24",
+    "question": "我今年能进莱茵金属吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖侍从",
+        "name_en": "Page of Wands",
+        "reversed": false,
+        "img": "w11.jpg",
+        "desc": "权杖领域中的信息、起步与学习",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-08 13:45:24",
+    "question": "根据两次见面后的状态，再看看我和涵之的关系",
+    "spread": "relationship",
+    "cards": [
+      {
+        "position": "你",
+        "name_zh": "皇后",
+        "name_en": "The Empress",
+        "reversed": true,
+        "img": "m03.jpg",
+        "desc": "逆位视角：生命力与成长",
+        "keywords": [
+          "丰盛",
+          "滋养",
+          "创造"
+        ]
+      },
+      {
+        "position": "对方",
+        "name_zh": "宝剑七",
+        "name_en": "Seven of Swords",
+        "reversed": false,
+        "img": "s07.jpg",
+        "desc": "宝剑领域中的评估、挑战与坚持",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      },
+      {
+        "position": "关系",
+        "name_zh": "宝剑八",
+        "name_en": "Eight of Swords",
+        "reversed": true,
+        "img": "s08.jpg",
+        "desc": "逆位视角：宝剑领域中的推进、专注与修炼",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-08 13:48:27",
+    "question": "他从我的世界经过，我会有什么经历",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "圣杯骑士",
+        "name_en": "Knight of Cups",
+        "reversed": false,
+        "img": "c12.jpg",
+        "desc": "圣杯领域中的推进、行动与冲劲",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "宝剑二",
+        "name_en": "Two of Swords",
+        "reversed": false,
+        "img": "s02.jpg",
+        "desc": "宝剑领域中的平衡、选择与互动",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "宝剑七",
+        "name_en": "Seven of Swords",
+        "reversed": true,
+        "img": "s07.jpg",
+        "desc": "逆位视角：宝剑领域中的评估、挑战与坚持",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-10 08:46:58",
+    "question": "他变得更在乎我了，我会取代他的新男友吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币国王",
+        "name_en": "King of Pentacles",
+        "reversed": false,
+        "img": "p14.jpg",
+        "desc": "星币领域中的成熟、主导与定型",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-10 13:00:41",
+    "question": "我会得到这份信任吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "节制",
+        "name_en": "Temperance",
+        "reversed": false,
+        "img": "m14.jpg",
+        "desc": "中庸与整合",
+        "keywords": [
+          "平衡",
+          "融合",
+          "调和"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-10 13:59:56",
+    "question": "宇宙给我点信息，让我再深入一点判断我们的未来",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "圣杯四",
+        "name_en": "Four of Cups",
+        "reversed": false,
+        "img": "c04.jpg",
+        "desc": "圣杯领域中的稳定、停滞或守成",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-10 14:13:39",
+    "question": "我需要更多的信息，我知道今天很累了，所以随缘吧，用尽最后一点力量，今天最后抽一次",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币三",
+        "name_en": "Three of Pentacles",
+        "reversed": true,
+        "img": "p03.jpg",
+        "desc": "逆位视角：星币领域中的成长、合作与扩展",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-12 08:16:58",
+    "question": "对于和张涵之的这段关系，我该怎么做，A保持现在的投入，B减少投入 然后第三张告诉我建议",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "圣杯六",
+        "name_en": "Six of Cups",
+        "reversed": true,
+        "img": "c06.jpg",
+        "desc": "逆位视角：圣杯领域中的过渡、调整与回流",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "权杖二",
+        "name_en": "Two of Wands",
+        "reversed": false,
+        "img": "w02.jpg",
+        "desc": "权杖领域中的平衡、选择与互动",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "星币十",
+        "name_en": "Ten of Pentacles",
+        "reversed": true,
+        "img": "p10.jpg",
+        "desc": "逆位视角：星币领域中的完成、满溢或终局",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-15 06:26:50",
+    "question": "这周运势",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币三",
+        "name_en": "Three of Pentacles",
+        "reversed": false,
+        "img": "p03.jpg",
+        "desc": "星币领域中的成长、合作与扩展",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-15 06:29:54",
+    "question": "张涵之的巴黎之行顺利吗，演讲会不会很成功",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币五",
+        "name_en": "Five of Pentacles",
+        "reversed": false,
+        "img": "p05.jpg",
+        "desc": "星币领域中的冲突、缺失或不安",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-15 06:33:37",
+    "question": "我周三的面试会成功吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑骑士",
+        "name_en": "Knight of Swords",
+        "reversed": false,
+        "img": "s12.jpg",
+        "desc": "宝剑领域中的推进、行动与冲劲",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-16 15:40:35",
+    "question": "明天面试会顺利吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "圣杯骑士",
+        "name_en": "Knight of Cups",
+        "reversed": false,
+        "img": "c12.jpg",
+        "desc": "圣杯领域中的推进、行动与冲劲",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-16 16:06:35",
+    "question": "我还有多久能摆脱张涵之",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "圣杯五",
+        "name_en": "Five of Cups",
+        "reversed": false,
+        "img": "c05.jpg",
+        "desc": "圣杯领域中的冲突、缺失或不安",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-16 16:20:25",
+    "question": "我和张涵之最后会是一种什么状态",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币九",
+        "name_en": "Nine of Pentacles",
+        "reversed": true,
+        "img": "p09.jpg",
+        "desc": "逆位视角：星币领域中的成熟、收获与临界点",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-18 06:28:25",
+    "question": "我会被ibidi录用吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "太阳",
+        "name_en": "The Sun",
+        "reversed": true,
+        "img": "m19.jpg",
+        "desc": "逆位视角：清晰与生命力",
+        "keywords": [
+          "成功",
+          "快乐",
+          "能量"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-18 06:29:46",
+    "question": "我想张涵之",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "隐者",
+        "name_en": "The Hermit",
+        "reversed": false,
+        "img": "m09.jpg",
+        "desc": "向内探索",
+        "keywords": [
+          "独处",
+          "思考",
+          "寻找"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-18 11:31:05",
+    "question": "",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币国王",
+        "name_en": "King of Pentacles",
+        "reversed": true,
+        "img": "p14.jpg",
+        "desc": "逆位视角：星币领域中的成熟、主导与定型",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-18 13:55:51",
+    "question": "",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "皇帝",
+        "name_en": "The Emperor",
+        "reversed": false,
+        "img": "m04.jpg",
+        "desc": "规则与掌控",
+        "keywords": [
+          "秩序",
+          "权威",
+          "结构"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-18 14:20:36",
+    "question": "我修复了自己吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖九",
+        "name_en": "Nine of Wands",
+        "reversed": true,
+        "img": "w09.jpg",
+        "desc": "逆位视角：权杖领域中的成熟、收获与临界点",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-18 14:25:52",
+    "question": "最重要的是真心，我这辈子有机会和人真心换真心吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑八",
+        "name_en": "Eight of Swords",
+        "reversed": true,
+        "img": "s08.jpg",
+        "desc": "逆位视角：宝剑领域中的推进、专注与修炼",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-19 06:59:46",
+    "question": "可以和我互相照顾的人在哪呢",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑四",
+        "name_en": "Four of Swords",
+        "reversed": false,
+        "img": "s04.jpg",
+        "desc": "宝剑领域中的稳定、停滞或守成",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-22 12:16:45",
+    "question": "今天下午要开会，会是什么情况",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币八",
+        "name_en": "Eight of Pentacles",
+        "reversed": true,
+        "img": "p08.jpg",
+        "desc": "逆位视角：星币领域中的推进、专注与修炼",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-22 12:18:43",
+    "question": "感情状况",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑三",
+        "name_en": "Three of Swords",
+        "reversed": false,
+        "img": "s03.jpg",
+        "desc": "宝剑领域中的成长、合作与扩展",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-22 12:20:44",
+    "question": "预测感情状况",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑八",
+        "name_en": "Eight of Swords",
+        "reversed": true,
+        "img": "s08.jpg",
+        "desc": "逆位视角：宝剑领域中的推进、专注与修炼",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-23 15:50:38",
+    "question": "我好像光速就从张涵之的支配中走出来了",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "圣杯侍从",
+        "name_en": "Page of Cups",
+        "reversed": false,
+        "img": "c11.jpg",
+        "desc": "圣杯领域中的信息、起步与学习",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-23 16:05:01",
+    "question": "我是一个有魅力的人嘛",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖四",
+        "name_en": "Four of Wands",
+        "reversed": true,
+        "img": "w04.jpg",
+        "desc": "逆位视角：权杖领域中的稳定、停滞或守成",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-24 07:10:13",
+    "question": "心态已经放平了，我和张涵之顺其自然吧",
+    "spread": "relationship",
+    "cards": [
+      {
+        "position": "你",
+        "name_zh": "宝剑一",
+        "name_en": "Ace of Swords",
+        "reversed": true,
+        "img": "s01.jpg",
+        "desc": "逆位视角：宝剑领域中的新的开端，能量初现",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      },
+      {
+        "position": "对方",
+        "name_zh": "星币王后",
+        "name_en": "Queen of Pentacles",
+        "reversed": false,
+        "img": "p13.jpg",
+        "desc": "星币领域中的内化、掌控与滋养",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      },
+      {
+        "position": "关系",
+        "name_zh": "教皇",
+        "name_en": "The Hierophant",
+        "reversed": true,
+        "img": "m05.jpg",
+        "desc": "逆位视角：社会规则与精神指引",
+        "keywords": [
+          "传统",
+          "信仰",
+          "规范"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-24 07:23:19",
+    "question": "同事要我给他的项目焊接一个pcb，我真的要做吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑四",
+        "name_en": "Four of Swords",
+        "reversed": true,
+        "img": "s04.jpg",
+        "desc": "逆位视角：宝剑领域中的稳定、停滞或守成",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-24 11:13:21",
+    "question": "周五回国会一路顺风吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "战车",
+        "name_en": "The Chariot",
+        "reversed": false,
+        "img": "m07.jpg",
+        "desc": "控制与突破",
+        "keywords": [
+          "意志",
+          "前进",
+          "胜利"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-24 14:10:56",
+    "question": "这个夏天我能在兰州遇见有趣的人吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币七",
+        "name_en": "Seven of Pentacles",
+        "reversed": true,
+        "img": "p07.jpg",
+        "desc": "逆位视角：星币领域中的评估、挑战与坚持",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-24 15:31:36",
+    "question": "回兰州会有性生活吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "正义",
+        "name_en": "Justice",
+        "reversed": true,
+        "img": "m11.jpg",
+        "desc": "逆位视角：因果与衡量",
+        "keywords": [
+          "公平",
+          "判断",
+          "平衡"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-24 15:32:22",
+    "question": "回兰州会有性生活吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "高塔",
+        "name_en": "The Tower",
+        "reversed": true,
+        "img": "m16.jpg",
+        "desc": "逆位视角：突然的改变",
+        "keywords": [
+          "崩塌",
+          "冲击",
+          "觉醒"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-24 15:33:14",
+    "question": "回兰州会有性生活吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑六",
+        "name_en": "Six of Swords",
+        "reversed": false,
+        "img": "s06.jpg",
+        "desc": "宝剑领域中的过渡、调整与回流",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-24 16:10:14",
+    "question": "我知道这次回兰州主要是陪家人，可是有什么支线呢",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖二",
+        "name_en": "Two of Wands",
+        "reversed": true,
+        "img": "w02.jpg",
+        "desc": "逆位视角：权杖领域中的平衡、选择与互动",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-24 16:12:43",
+    "question": "我要清晰一点的指示",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖四",
+        "name_en": "Four of Wands",
+        "reversed": true,
+        "img": "w04.jpg",
+        "desc": "逆位视角：权杖领域中的稳定、停滞或守成",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-24 16:17:54",
+    "question": "我会因为回家更开心的度过三周吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币七",
+        "name_en": "Seven of Pentacles",
+        "reversed": false,
+        "img": "p07.jpg",
+        "desc": "星币领域中的评估、挑战与坚持",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-24 16:19:25",
+    "question": "至少我会吃的开心吧",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "恋人",
+        "name_en": "The Lovers",
+        "reversed": true,
+        "img": "m06.jpg",
+        "desc": "逆位视角：情感与抉择",
+        "keywords": [
+          "选择",
+          "关系",
+          "连接"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-06-24 16:23:40",
+    "question": "我悟了",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "皇后",
+        "name_en": "The Empress",
+        "reversed": false,
+        "img": "m03.jpg",
+        "desc": "生命力与成长",
+        "keywords": [
+          "丰盛",
+          "滋养",
+          "创造"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-20 09:29:31",
+    "question": "如果我不主动发消息，我和涵之还会见面吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖六",
+        "name_en": "Six of Wands",
+        "reversed": false,
+        "img": "w06.jpg",
+        "desc": "权杖领域中的过渡、调整与回流",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-20 11:36:40",
+    "question": "我下半年的感情状态",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "节制",
+        "name_en": "Temperance",
+        "reversed": true,
+        "img": "m14.jpg",
+        "desc": "逆位视角：中庸与整合",
+        "keywords": [
+          "平衡",
+          "融合",
+          "调和"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "圣杯六",
+        "name_en": "Six of Cups",
+        "reversed": true,
+        "img": "c06.jpg",
+        "desc": "逆位视角：圣杯领域中的过渡、调整与回流",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "权杖侍从",
+        "name_en": "Page of Wands",
+        "reversed": true,
+        "img": "w11.jpg",
+        "desc": "逆位视角：权杖领域中的信息、起步与学习",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-20 11:38:02",
+    "question": "如果我坚持不主动联系涵之，到八月底，我最需要注意的是什么？",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币三",
+        "name_en": "Three of Pentacles",
+        "reversed": true,
+        "img": "p03.jpg",
+        "desc": "逆位视角：星币领域中的成长、合作与扩展",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-20 11:39:42",
+    "question": "最后一次猜测，我们的未来",
+    "spread": "relationship",
+    "cards": [
+      {
+        "position": "你",
+        "name_zh": "星币五",
+        "name_en": "Five of Pentacles",
+        "reversed": true,
+        "img": "p05.jpg",
+        "desc": "逆位视角：星币领域中的冲突、缺失或不安",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      },
+      {
+        "position": "对方",
+        "name_zh": "权杖八",
+        "name_en": "Eight of Wands",
+        "reversed": false,
+        "img": "w08.jpg",
+        "desc": "权杖领域中的推进、专注与修炼",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      },
+      {
+        "position": "关系",
+        "name_zh": "高塔",
+        "name_en": "The Tower",
+        "reversed": false,
+        "img": "m16.jpg",
+        "desc": "突然的改变",
+        "keywords": [
+          "崩塌",
+          "冲击",
+          "觉醒"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-21 12:55:26",
+    "question": "涵之开始厌倦我了吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "正义",
+        "name_en": "Justice",
+        "reversed": true,
+        "img": "m11.jpg",
+        "desc": "逆位视角：因果与衡量",
+        "keywords": [
+          "公平",
+          "判断",
+          "平衡"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-21 13:00:20",
+    "question": "拜托了，告诉我我们还能见面吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币一",
+        "name_en": "Ace of Pentacles",
+        "reversed": false,
+        "img": "p01.jpg",
+        "desc": "星币领域中的新的开端，能量初现",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-21 13:29:52",
+    "question": "我能遇见比涵之还高帅的s当一生伴侣吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑王后",
+        "name_en": "Queen of Swords",
+        "reversed": true,
+        "img": "s13.jpg",
+        "desc": "逆位视角：宝剑领域中的内化、掌控与滋养",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-21 13:34:12",
+    "question": "给我一个明示吧，我很需要，我现在很痛苦",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币二",
+        "name_en": "Two of Pentacles",
+        "reversed": true,
+        "img": "p02.jpg",
+        "desc": "逆位视角：星币领域中的平衡、选择与互动",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-22 08:57:02",
+    "question": "他因为忙碌所以和我联系少，我该信任这是事实而不是托词吗？",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖二",
+        "name_en": "Two of Wands",
+        "reversed": true,
+        "img": "w02.jpg",
+        "desc": "逆位视角：权杖领域中的平衡、选择与互动",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-22 13:06:42",
+    "question": "下半年真的能心想事成吗",
+    "spread": "three",
+    "cards": [
+      {
+        "position": "过去",
+        "name_zh": "恋人",
+        "name_en": "The Lovers",
+        "reversed": true,
+        "img": "m06.jpg",
+        "desc": "逆位视角：情感与抉择",
+        "keywords": [
+          "选择",
+          "关系",
+          "连接"
+        ]
+      },
+      {
+        "position": "现在",
+        "name_zh": "圣杯国王",
+        "name_en": "King of Cups",
+        "reversed": false,
+        "img": "c14.jpg",
+        "desc": "圣杯领域中的成熟、主导与定型",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      },
+      {
+        "position": "未来",
+        "name_zh": "圣杯五",
+        "name_en": "Five of Cups",
+        "reversed": true,
+        "img": "c05.jpg",
+        "desc": "逆位视角：圣杯领域中的冲突、缺失或不安",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-22 13:08:09",
+    "question": "下半年真的能心想事成吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "女祭司",
+        "name_en": "The High Priestess",
+        "reversed": true,
+        "img": "m02.jpg",
+        "desc": "逆位视角：内心的声音与隐藏知识",
+        "keywords": [
+          "直觉",
+          "神秘",
+          "内在"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-22 13:11:39",
+    "question": "他忙完会来找我吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑五",
+        "name_en": "Five of Swords",
+        "reversed": true,
+        "img": "s05.jpg",
+        "desc": "逆位视角：宝剑领域中的冲突、缺失或不安",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-23 12:48:02",
+    "question": "这周末我会快乐吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑九",
+        "name_en": "Nine of Swords",
+        "reversed": true,
+        "img": "s09.jpg",
+        "desc": "逆位视角：宝剑领域中的成熟、收获与临界点",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-24 10:54:31",
+    "question": "我能解决hirth这个问题吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "战车",
+        "name_en": "The Chariot",
+        "reversed": false,
+        "img": "m07.jpg",
+        "desc": "控制与突破",
+        "keywords": [
+          "意志",
+          "前进",
+          "胜利"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-24 13:09:17",
+    "question": "8月1号的csd游行，我能遇见我的命定之人吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑骑士",
+        "name_en": "Knight of Swords",
+        "reversed": false,
+        "img": "s12.jpg",
+        "desc": "宝剑领域中的推进、行动与冲劲",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-28 08:30:17",
+    "question": "我要放下他了，我做的对吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "恶魔",
+        "name_en": "The Devil",
+        "reversed": true,
+        "img": "m15.jpg",
+        "desc": "逆位视角：被困与执念",
+        "keywords": [
+          "束缚",
+          "欲望",
+          "依赖"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-28 10:24:58",
+    "question": "要和hirth的蠢猪们开会了，我要怎么样",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑五",
+        "name_en": "Five of Swords",
+        "reversed": true,
+        "img": "s05.jpg",
+        "desc": "逆位视角：宝剑领域中的冲突、缺失或不安",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-29 10:35:20",
+    "question": "我究竟会有怎样的未来呢",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖十",
+        "name_en": "Ten of Wands",
+        "reversed": true,
+        "img": "w10.jpg",
+        "desc": "逆位视角：权杖领域中的完成、满溢或终局",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-31 06:51:31",
+    "question": "我和涵之结束了，对吗",
+    "spread": "relationship",
+    "cards": [
+      {
+        "position": "你",
+        "name_zh": "圣杯四",
+        "name_en": "Four of Cups",
+        "reversed": false,
+        "img": "c04.jpg",
+        "desc": "圣杯领域中的稳定、停滞或守成",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      },
+      {
+        "position": "对方",
+        "name_zh": "星币七",
+        "name_en": "Seven of Pentacles",
+        "reversed": true,
+        "img": "p07.jpg",
+        "desc": "逆位视角：星币领域中的评估、挑战与坚持",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      },
+      {
+        "position": "关系",
+        "name_zh": "星币二",
+        "name_en": "Two of Pentacles",
+        "reversed": false,
+        "img": "p02.jpg",
+        "desc": "星币领域中的平衡、选择与互动",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-07-31 06:53:22",
+    "question": "我很贪心，想知道一点未来",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "皇帝",
+        "name_en": "The Emperor",
+        "reversed": false,
+        "img": "m04.jpg",
+        "desc": "规则与掌控",
+        "keywords": [
+          "秩序",
+          "权威",
+          "结构"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-08-03 13:06:23",
+    "question": "最后一次，我和涵之还会在纽伦堡见面吗",
+    "spread": "relationship",
+    "cards": [
+      {
+        "position": "你",
+        "name_zh": "宝剑骑士",
+        "name_en": "Knight of Swords",
+        "reversed": false,
+        "img": "s12.jpg",
+        "desc": "宝剑领域中的推进、行动与冲劲",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      },
+      {
+        "position": "对方",
+        "name_zh": "星币骑士",
+        "name_en": "Knight of Pentacles",
+        "reversed": false,
+        "img": "p12.jpg",
+        "desc": "星币领域中的推进、行动与冲劲",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      },
+      {
+        "position": "关系",
+        "name_zh": "节制",
+        "name_en": "Temperance",
+        "reversed": false,
+        "img": "m14.jpg",
+        "desc": "中庸与整合",
+        "keywords": [
+          "平衡",
+          "融合",
+          "调和"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-08-03 13:47:18",
+    "question": "我的感情是否出现了新的转机",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "太阳",
+        "name_en": "The Sun",
+        "reversed": false,
+        "img": "m19.jpg",
+        "desc": "清晰与生命力",
+        "keywords": [
+          "成功",
+          "快乐",
+          "能量"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-08-11 13:15:28",
+    "question": "朱家君，你是我的正缘吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖骑士",
+        "name_en": "Knight of Wands",
+        "reversed": true,
+        "img": "w12.jpg",
+        "desc": "逆位视角：权杖领域中的推进、行动与冲劲",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-08-19 11:24:35",
+    "question": "我和193的德国人会有怎么样的发展",
+    "spread": "relationship",
+    "cards": [
+      {
+        "position": "你",
+        "name_zh": "宝剑十",
+        "name_en": "Ten of Swords",
+        "reversed": false,
+        "img": "s10.jpg",
+        "desc": "宝剑领域中的完成、满溢或终局",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      },
+      {
+        "position": "对方",
+        "name_zh": "月亮",
+        "name_en": "The Moon",
+        "reversed": true,
+        "img": "m18.jpg",
+        "desc": "逆位视角：未知与幻想",
+        "keywords": [
+          "迷惑",
+          "潜意识",
+          "不安"
+        ]
+      },
+      {
+        "position": "关系",
+        "name_zh": "权杖三",
+        "name_en": "Three of Wands",
+        "reversed": false,
+        "img": "w03.jpg",
+        "desc": "权杖领域中的成长、合作与扩展",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-08-25 15:02:58",
+    "question": "我能解决hirth和pic迁移嘛",
+    "spread": "choice",
+    "cards": [
+      {
+        "position": "选项A",
+        "name_zh": "圣杯七",
+        "name_en": "Seven of Cups",
+        "reversed": true,
+        "img": "c07.jpg",
+        "desc": "逆位视角：圣杯领域中的评估、挑战与坚持",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      },
+      {
+        "position": "选项B",
+        "name_zh": "权杖八",
+        "name_en": "Eight of Wands",
+        "reversed": true,
+        "img": "w08.jpg",
+        "desc": "逆位视角：权杖领域中的推进、专注与修炼",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-09-03 14:50:04",
+    "question": "昨天是和张涵之最后一次说话了吧",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑六",
+        "name_en": "Six of Swords",
+        "reversed": false,
+        "img": "s06.jpg",
+        "desc": "宝剑领域中的过渡、调整与回流",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-09-03 14:55:29",
+    "question": "李梓良会和我发展成什么样的关系",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑八",
+        "name_en": "Eight of Swords",
+        "reversed": false,
+        "img": "s08.jpg",
+        "desc": "宝剑领域中的推进、专注与修炼",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-09-17 09:21:36",
+    "question": "我这次能进入阿斯麦吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "权杖二",
+        "name_en": "Two of Wands",
+        "reversed": true,
+        "img": "w02.jpg",
+        "desc": "逆位视角：权杖领域中的平衡、选择与互动",
+        "keywords": [
+          "行动",
+          "热情",
+          "意志"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-09-17 09:22:29",
+    "question": "我能快乐吗",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "节制",
+        "name_en": "Temperance",
+        "reversed": false,
+        "img": "m14.jpg",
+        "desc": "中庸与整合",
+        "keywords": [
+          "平衡",
+          "融合",
+          "调和"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-09-17 09:29:14",
+    "question": "上天什么时候能眷顾我一次",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "星币四",
+        "name_en": "Four of Pentacles",
+        "reversed": false,
+        "img": "p04.jpg",
+        "desc": "星币领域中的稳定、停滞或守成",
+        "keywords": [
+          "物质",
+          "现实",
+          "积累"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-09-22 11:59:00",
+    "question": "周六和陈江裕相处的会愉快嘛",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "圣杯五",
+        "name_en": "Five of Cups",
+        "reversed": true,
+        "img": "c05.jpg",
+        "desc": "逆位视角：圣杯领域中的冲突、缺失或不安",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-09-24 13:09:10",
+    "question": "李梓良 陈江裕，两个人和我以后有什么发展",
+    "spread": "choice",
+    "cards": [
+      {
+        "position": "选项A",
+        "name_zh": "宝剑五",
+        "name_en": "Five of Swords",
+        "reversed": true,
+        "img": "s05.jpg",
+        "desc": "逆位视角：宝剑领域中的冲突、缺失或不安",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      },
+      {
+        "position": "选项B",
+        "name_zh": "圣杯五",
+        "name_en": "Five of Cups",
+        "reversed": true,
+        "img": "c05.jpg",
+        "desc": "逆位视角：圣杯领域中的冲突、缺失或不安",
+        "keywords": [
+          "情感",
+          "关系",
+          "感受"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-10-06 14:24:45",
+    "question": "多久可以离开pvl",
+    "spread": "single",
+    "cards": [
+      {
+        "position": "此刻",
+        "name_zh": "宝剑王后",
+        "name_en": "Queen of Swords",
+        "reversed": false,
+        "img": "s13.jpg",
+        "desc": "宝剑领域中的内化、掌控与滋养",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  },
+  {
+    "time": "2026-10-06 15:04:39",
+    "question": "李梓良vs陈江裕",
+    "spread": "choice",
+    "cards": [
+      {
+        "position": "选项A",
+        "name_zh": "正义",
+        "name_en": "Justice",
+        "reversed": false,
+        "img": "m11.jpg",
+        "desc": "因果与衡量",
+        "keywords": [
+          "公平",
+          "判断",
+          "平衡"
+        ]
+      },
+      {
+        "position": "选项B",
+        "name_zh": "宝剑四",
+        "name_en": "Four of Swords",
+        "reversed": true,
+        "img": "s04.jpg",
+        "desc": "逆位视角：宝剑领域中的稳定、停滞或守成",
+        "keywords": [
+          "思维",
+          "冲突",
+          "判断"
+        ]
+      }
+    ]
+  }
+]
