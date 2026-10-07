@@ -1,12 +1,13 @@
 import random
-from urllib.parse import quote
+import queue
+import threading
 import ttkbootstrap as tb
 from ttkbootstrap.constants import *
 from ttkbootstrap.dialogs import Messagebox
-from ttkbootstrap.scrolled import ScrolledText
+from ttkbootstrap.widgets.scrolled import ScrolledText
 from typing import Any, Dict, Optional
 
-from utils import get_jinrishici_quote, format_now
+from utils import get_jinrishici_quote, format_now, load_quote_library
 
 
 class FavoritesWindow(tb.Toplevel):
@@ -184,9 +185,12 @@ class QuoteWindow(tb.Toplevel):
 
         self.current_quote: Optional[Dict[str, Any]] = None
         self.last_api_quote = None
+        self._results = queue.Queue()
+        self._loading = False
+        self._poll_job = None
 
         self.build_ui()
-        self.after(50, self.next_quote)
+        self._poll_job = self.after(50, self.next_quote)
 
     def build_ui(self):
         main = tb.Frame(self, padding=14)
@@ -212,24 +216,56 @@ class QuoteWindow(tb.Toplevel):
         row = tb.Frame(main)
         row.pack(fill=X, pady=(24, 8))
 
-        tb.Button(row, text="下一条", bootstyle="primary", command=self.next_quote).pack(side=LEFT, padx=(0, 8))
+        self.next_btn = tb.Button(row, text="下一条", bootstyle="primary", command=self.next_quote)
+        self.next_btn.pack(side=LEFT, padx=(0, 8))
         tb.Button(row, text="收藏", bootstyle="success", command=self.favorite_current).pack(side=LEFT, padx=(0, 8))
         tb.Button(row, text="记录此刻", bootstyle="danger", command=self.add_custom_quote).pack(side=LEFT, padx=(0, 8))
         tb.Button(row, text="我的记录", command=self.open_custom_quotes).pack(side=LEFT, padx=(0, 8))
         tb.Button(row, text="收藏夹", bootstyle="primary-outline", command=self.open_favorites).pack(side=LEFT)
 
     def next_quote(self):
-        quote = get_jinrishici_quote()
-
-        if not quote:
-            self.quote_label.configure(text="获取失败，请检查网络")
-            self.source_label.configure(text="")
+        if self._loading:
             return
+        self._loading = True
+        self.current_quote = None
+        self.next_btn.configure(state=DISABLED)
+        self.quote_label.configure(text="正在获取一句话……")
+        self.source_label.configure(text="")
+        # Only the main thread touches Tk or application state.
+        def fetch():
+            try:
+                result = get_jinrishici_quote()
+            except Exception:
+                result = None
+            self._results.put(result)
+        threading.Thread(target=fetch, daemon=True).start()
+        self._poll_job = self.after(50, self._poll_quote)
 
-        self.current_quote = quote
+    def _poll_quote(self):
+        try:
+            result = self._results.get_nowait()
+        except queue.Empty:
+            self._poll_job = self.after(50, self._poll_quote)
+            return
+        self._poll_job = None
+        self._loading = False
+        self.next_btn.configure(state=NORMAL)
+        if not result:
+            local = load_quote_library() + self.app.store.state["quotes"]["all"]
+            candidates = [item for item in local if item != self.last_api_quote]
+            result = random.choice(candidates or local)
+            self.source_label.configure(text=f"—— {result['source']}（本地内容）")
+        else:
+            self.source_label.configure(text=f"—— {result['source']}")
+        self.current_quote = result
+        self.last_api_quote = result
+        self.quote_label.configure(text=result["text"])
 
-        self.quote_label.configure(text=self.current_quote["text"])
-        self.source_label.configure(text=f"—— {self.current_quote['source']}")
+    def destroy(self):
+        if self._poll_job is not None:
+            self.after_cancel(self._poll_job)
+            self._poll_job = None
+        super().destroy()
 
     def favorite_current(self):
         if not self.current_quote:
@@ -280,7 +316,7 @@ class QuoteWindow(tb.Toplevel):
         tb.Button(main, text="保存", bootstyle="success", command=save_custom).pack(anchor=E)
 
     def open_favorites(self):
-        FavoritesWindow(self.app)
+        self.app.open_favorites()
 
     def open_custom_quotes(self):
-        CustomQuotesWindow(self.app)
+        self.app._open_or_focus("custom_quotes", CustomQuotesWindow)

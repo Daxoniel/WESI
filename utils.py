@@ -6,11 +6,18 @@ import urllib.error
 import json
 import random
 import time
+import shutil
+from uuid import uuid4
+from storage import read_json, write_json
+from tools.make_tarot_json import convert_cards
 
 from PIL import Image, ImageOps, ImageTk, ImageDraw
 
 from config import (
     TAROT_JSON_FILE,
+    PROJECT_DIR,
+    QUOTES_FILE,
+    QUOTE_LIBRARY,
     PET_ITEMS_FILE,
     PET_EVENTS_FILE,
     D2DATA_DIR,
@@ -32,43 +39,51 @@ from config import (
 # Helpers
 # =========================
 def load_json_file(path, default=None):
-    try:
-        if path.exists():
-            with open(path, "r", encoding="utf-8") as f:
-                return json.load(f)
-    except Exception as e:
-        print(f"[JSON ERROR] {path}: {e}")
-    return default
+    return read_json(path, default)
+
+
 def load_tarot_cards():
-    data = load_json_file(TAROT_JSON_FILE, {"cards": []})
-    return data.get("cards", [])
+    data = read_json(TAROT_JSON_FILE, {}, dict)
+    cards = data.get("cards", [])
+    required = {"name_en", "name_zh", "img", "desc"}
+    if isinstance(cards, list) and cards and all(
+        isinstance(c, dict) and required <= c.keys()
+        and all(isinstance(c[k], str) for k in required)
+        and isinstance(c.get("keywords", []), list)
+        for c in cards
+    ):
+        return cards
+    source = read_json(PROJECT_DIR / "data/tarot.json", {"cards": []}, dict)
+    return convert_cards(source)
+
 
 def load_tarot_history():
-    if not TAROT_HISTORY_FILE.exists():
-        return []
-    try:
-        with open(TAROT_HISTORY_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        return data if isinstance(data, list) else []
-    except Exception:
-        return []
+    return read_json(TAROT_HISTORY_FILE, [], list)
+
+
 def save_tarot_history(history):
-    with open(TAROT_HISTORY_FILE, "w", encoding="utf-8") as f:
-        json.dump(history, f, ensure_ascii=False, indent=2)
+    write_json(TAROT_HISTORY_FILE, history)
 
 
-    # fallback（确保完全 JSON-safe）
-    return json.loads(json.dumps(QUOTE_LIBRARY, ensure_ascii=False))
+def load_quote_library():
+    data = read_json(QUOTES_FILE, QUOTE_LIBRARY, list)
+    valid = [item for item in data if isinstance(item, dict)
+             and isinstance(item.get("text"), str) and item["text"].strip()
+             and isinstance(item.get("source"), str)]
+    return valid or json.loads(json.dumps(QUOTE_LIBRARY, ensure_ascii=False))
 
 
 def load_pet_items() -> List[Dict[str, Any]]:
     data = load_json_file(PET_ITEMS_FILE, PET_ITEMS)
-    return data if isinstance(data, list) else json.loads(json.dumps(PET_ITEMS, ensure_ascii=False))
+    valid = [item for item in data if isinstance(item, dict)
+             and all(isinstance(item.get(key), str) for key in ("name", "rarity", "desc"))] if isinstance(data, list) else []
+    return valid or json.loads(json.dumps(PET_ITEMS, ensure_ascii=False))
 
 
 def load_pet_events() -> List[str]:
     data = load_json_file(PET_EVENTS_FILE, PET_EVENTS)
-    return data if isinstance(data, list) else json.loads(json.dumps(PET_EVENTS, ensure_ascii=False))
+    valid = [item for item in data if isinstance(item, str) and item.strip()] if isinstance(data, list) else []
+    return valid or list(PET_EVENTS)
 
 
 def import_d2_names_from_local_json() -> List[str]:
@@ -160,10 +175,11 @@ def safe_copy_image(path: str, target_dir: Path) -> str:
     src = Path(path)
     if not src.exists():
         return ""
-    name = f"{int(time.time())}_{src.name}"
-    dst = target_dir / name
-    with open(src, "rb") as fsrc, open(dst, "wb") as fdst:
-        fdst.write(fsrc.read())
+    with Image.open(src) as image:
+        image.verify()
+    target_dir.mkdir(parents=True, exist_ok=True)
+    dst = target_dir / f"{uuid4().hex}_{src.name}"
+    shutil.copy2(src, dst)
     return str(dst)
 
 
@@ -265,25 +281,30 @@ def get_jinrishici_quote() -> dict | None:
     except Exception:
         return None
     
+def _load_strings(path, fallback):
+    data = read_json(path, [], list)
+    return [value for value in data if isinstance(value, str) and value.strip()] or list(fallback)
+
+
 def load_battle_attack_points():
-    return load_json_file(BATTLE_ATTACK_POINT_FILE, [])
+    return _load_strings(BATTLE_ATTACK_POINT_FILE, ["肩膀"])
 
 
 def load_battle_base_game_weapons():
-    return load_json_file(BATTLE_BASE_GAME_WEAPONS_FILE, [])
+    return _load_strings(BATTLE_BASE_GAME_WEAPONS_FILE, ["泡沫锤"])
 
 
 def load_battle_damage_types():
-    return load_json_file(BATTLE_DAMAGE_TYPES_FILE, [])
+    return _load_strings(BATTLE_DAMAGE_TYPES_FILE, ["解压"])
 
 
 def load_battle_reactions():
-    return load_json_file(BATTLE_REACTIONS_FILE, [])
+    return _load_strings(BATTLE_REACTIONS_FILE, ["压力散去了一点。"])
 
 
 def load_battle_real_weapons():
-    return load_json_file(BATTLE_REAL_WEAPONS_FILE, [])
+    return _load_strings(BATTLE_REAL_WEAPONS_FILE, ["抱枕"])
 
 
 def load_battle_warm_messages():
-    return load_json_file(BATTLE_WARM_MESSAGES_FILE, [])
+    return _load_strings(BATTLE_WARM_MESSAGES_FILE, ["休息一下，照顾好自己。"])

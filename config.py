@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import Any, Dict
+import os
 
 APP_TITLE = "WESI（Wage Extraction & Survival Interface）"
 
@@ -7,15 +8,14 @@ APP_TITLE = "WESI（Wage Extraction & Survival Interface）"
 # Paths
 # =========================
 PROJECT_DIR = Path(__file__).resolve().parent
-DATA_DIR = PROJECT_DIR / "data"
+DATA_DIR = Path(os.environ.get("WESI_DATA_DIR", PROJECT_DIR / "data")).expanduser().resolve()
 ASSETS_DIR = PROJECT_DIR / "assets"
-PET_DIR = ASSETS_DIR / "pets"
-AVATAR_DIR = ASSETS_DIR / "avatars"
+USER_ASSETS_DIR = DATA_DIR / "assets" if os.environ.get("WESI_DATA_DIR") else ASSETS_DIR
+PET_DIR = USER_ASSETS_DIR / "pets"
+AVATAR_DIR = USER_ASSETS_DIR / "avatars"
 TAROT_DIR = ASSETS_DIR / "tarot"
 D2DATA_DIR = DATA_DIR / "d2data_json"
 TAROT_HISTORY_FILE = DATA_DIR / "tarot_history.json"
-for folder in [DATA_DIR, ASSETS_DIR, PET_DIR, AVATAR_DIR, TAROT_DIR, D2DATA_DIR]:
-    folder.mkdir(parents=True, exist_ok=True)
 
 DATA_FILE = DATA_DIR / "app_state.json"
 QUOTES_FILE = DATA_DIR / "quotes_library.json"
@@ -76,6 +76,9 @@ SPREAD_LABELS = {
 DEFAULT_STATE: Dict[str, Any] = {
     "income": {
         "monthly_net_salary": 2600.0,
+        "weekly_work_hours": 40.0,
+        "work_start": "09:00",
+        "work_end": "17:00",
         "employment_start": "2026-04-01 00:00:00",
         "window_geometry": "520x640+120+80",
     },
@@ -122,4 +125,3 @@ DEFAULT_STATE: Dict[str, Any] = {
         "unlocked": [],
     },
 }
-

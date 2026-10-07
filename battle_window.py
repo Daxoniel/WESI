@@ -3,7 +3,8 @@ from typing import List
 
 import ttkbootstrap as tb
 from ttkbootstrap.constants import *
-from ttkbootstrap.scrolled import ScrolledText
+from ttkbootstrap.widgets.scrolled import ScrolledText
+from ttkbootstrap.dialogs import Messagebox
 
 try:
     from PIL import Image
@@ -152,6 +153,7 @@ class BattleWindow(tb.Toplevel):
 
     def update_target(self):
         target = self.target_var.get().strip() or "Boss"
+        self.target_var.set(target)
 
         self.app.store.state["battle"]["default_target"] = target
 
@@ -175,7 +177,13 @@ class BattleWindow(tb.Toplevel):
         if not path:
             return
 
-        saved = safe_copy_image(path, AVATAR_DIR)
+        try:
+            saved = safe_copy_image(path, AVATAR_DIR)
+        except (OSError, ValueError):
+            Messagebox.ok("无法读取图片，请选择有效的图片文件。", "导入失败")
+            return
+        if not saved:
+            return
 
         target = self.target_var.get().strip() or "Boss"
 
@@ -235,8 +243,6 @@ class BattleWindow(tb.Toplevel):
         stats = self.app.store.state["battle"]["stats"]
         stats["total_hits"] += 1
 
-        self.app.increment_achievement_check()
-
         if self.current_hp == 0:
             stats["kills"] += 1
             warm = random.choice(self.app.battle_warm_messages)
@@ -245,5 +251,8 @@ class BattleWindow(tb.Toplevel):
             self.latest_label.configure(text=final_line)
             self._append_log(final_line)
             self.app.flash_status("战斗胜利。")
+
+        self.app.store.save()
+        self.app.increment_achievement_check()
 
         self.app.store.save()
