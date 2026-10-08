@@ -81,7 +81,7 @@ class DesktopTests(unittest.TestCase):
             self.app.root.after_cancel(self.app.income_job)
         self.app.update_income_ui()
         self.assertIn("+€ 0.0000", self.app.tick_label.cget("text"))
-        self.assertIn("今日回血", self.app.today_recovery_label.cget("text"))
+        self.assertAlmostEqual(self.app.salary_panel.target, self.app.get_income_stats()["today"], places=2)
 
     def test_settings_validate_and_save_work_schedule(self):
         self.app.open_settings_dialog()
@@ -219,6 +219,66 @@ class DesktopTests(unittest.TestCase):
             self.assertEqual(self.app.store.state["theme"], before)
         finally:
             dialog.destroy()
+
+    def test_salary_collection_is_persisted_without_changing_wages(self):
+        panel = self.app.salary_panel
+        income = copy.deepcopy(self.app.store.state["income"])
+        stats = {"today": 12.345, "rate": .01}
+        with patch.object(self.app, "get_income_stats", return_value=stats):
+            panel.collect()
+            panel.collect()
+        saved = json.loads(self.app.store.path.read_text())
+        self.assertEqual(saved["salary_display"]["collected_today"], 12.34)
+        self.assertEqual(saved["income"], income)
+        self.assertEqual(panel.target, 12.345)
+        self.assertEqual(str(panel.collect_button.cget("state")), "disabled")
+        self.assertTrue(panel.canvas.find_all())
+
+    def test_salary_collection_resets_on_new_day(self):
+        panel = self.app.salary_panel
+        settings = self.app.store.state["salary_display"]
+        settings.update(collection_date="2026-10-06", collected_today=20)
+        panel.update_stats({"today": 2, "rate": .01}, datetime(2026, 10, 7, 12))
+        self.assertEqual(settings["collected_today"], 0)
+        self.assertEqual(settings["collection_date"], "2026-10-07")
+        self.assertIn("€2.00", panel.collect_button.cget("text"))
+
+    def test_salary_quiet_mode_stops_effects_and_saves(self):
+        panel = self.app.salary_panel
+        panel.update_stats({"today": 4, "rate": .01})
+        panel._burst()
+        panel.quiet_var.set(True)
+        panel.toggle_quiet()
+        self.assertEqual(panel.particles, [])
+        self.assertEqual(panel.displayed_amount(), 4)
+        self.assertTrue(json.loads(self.app.store.path.read_text())["salary_display"]["quiet"])
+        panel.quiet_var.set(False)
+        panel.toggle_quiet()
+
+    def test_salary_goal_validation_and_save(self):
+        panel = self.app.salary_panel
+        panel.update_stats({"today": 4, "rate": .01})
+        panel.open_goal()
+        dialog = next(w for w in self.app.root.winfo_children()
+                      if w.winfo_class() == "Toplevel" and w.title() == "今天的小目标")
+        frame = dialog.winfo_children()[0]
+        entry = next(w for w in frame.winfo_children() if w.winfo_class() == "TEntry")
+        button = next(w for w in frame.winfo_children() if w.winfo_class() == "TButton")
+        entry.delete(0, "end")
+        entry.insert(0, "nan")
+        with patch("salary_panel.Messagebox.ok") as message:
+            button.invoke()
+            message.assert_called_once()
+        self.assertEqual(panel.settings["goal_amount"], 10)
+        panel.settings["goal_amount"] = 2
+        panel.update_stats({"today": 4, "rate": .01})
+        self.assertIn("达成", panel.feedback.cget("text"))
+        entry.delete(0, "end")
+        entry.insert(0, "25")
+        with patch.object(self.app, "get_income_stats", return_value={"today": 4, "rate": .01}):
+            button.invoke()
+        self.assertEqual(json.loads(self.app.store.path.read_text())["salary_display"]["goal_amount"], 25)
+        self.assertNotIn("达成", panel.feedback.cget("text"))
 
 
 if __name__ == "__main__":

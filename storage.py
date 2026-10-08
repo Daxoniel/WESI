@@ -91,6 +91,10 @@ class DataStore:
             income.update(copy.deepcopy(DEFAULT_STATE["income"]))
         if repairs and self.path.exists():
             preserve_invalid(self.path)
+        display = self.state["salary_display"]
+        if not .01 <= display["goal_amount"] <= 1000000:
+            display["goal_amount"] = DEFAULT_STATE["salary_display"]["goal_amount"]
+        display["collected_today"] = max(0, display["collected_today"])
         # Unknown fields survive round trips so later applications can extend state.
         self.state.setdefault("schema_version", 1)
         if not self.path.exists():

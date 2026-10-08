@@ -9,6 +9,7 @@ from income import calculate_income, count_workdays, validate_income, validate_s
 from storage import DataStore, read_json, write_json
 from utils import load_tarot_cards
 from config import TAROT_DIR
+from salary_panel import available_coins, work_status
 
 
 class IncomeTests(unittest.TestCase):
@@ -154,6 +155,24 @@ class TarotDataTests(unittest.TestCase):
             with self.subTest(card=card["name_en"]):
                 self.assertTrue(card["name_zh"])
                 self.assertTrue((TAROT_DIR/card["img"]).is_file())
+
+
+class SalaryDisplayTests(unittest.TestCase):
+    def test_only_completed_cents_can_be_collected(self):
+        self.assertEqual(available_coins(1.239, 1), .23)
+        self.assertEqual(available_coins(.009, 0), 0)
+        self.assertEqual(available_coins(1.24, 1.24), 0)
+
+    def test_salary_changes_never_create_negative_pending(self):
+        self.assertEqual(available_coins(3, 8), 0)
+        self.assertEqual(available_coins(-1, 8), 0)
+
+    def test_work_states_and_countdowns(self):
+        income = {"employment_start": "2026-01-01 00:00:00", "work_start": "09:00", "work_end": "17:00"}
+        self.assertEqual(work_status(income, datetime(2026, 10, 7, 8))[0], "等待上班")
+        self.assertEqual(work_status(income, datetime(2026, 10, 7, 12)), ("正在回收", "距离下班 05:00:00"))
+        self.assertEqual(work_status(income, datetime(2026, 10, 7, 17))[0], "今日收工")
+        self.assertEqual(work_status(income, datetime(2026, 10, 10, 12))[0], "休息日")
 
 
 if __name__ == "__main__":
