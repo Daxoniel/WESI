@@ -87,7 +87,15 @@ class SalaryAPI:
                 return {"ok": False, "error": "无法保存设置，请检查存档目录的写入权限。"}
 
     def confirm_receipt(self, payload):
-        """One durable receipt per salary month; lock also covers duplicate requests."""
+        return self._save_receipt(payload)
+
+    def edit_receipt(self, original_period, payload):
+        if not isinstance(original_period, str):
+            return {"ok": False, "error": "原到账月份无效。"}
+        return self._save_receipt(payload, original_period)
+
+    def _save_receipt(self, payload, original_period=None):
+        """Validate and persist before changing memory, including month moves."""
         with self._lock:
             try:
                 period = payload["period"]
@@ -99,12 +107,21 @@ class SalaryAPI:
                 amount = Decimal(str(payload["amount"]))
                 if not amount.is_finite() or not Decimal("0.01") <= amount <= Decimal("1000000000") or amount != amount.quantize(Decimal("0.01")):
                     raise ValueError("Invalid amount")
-                if period in self._store.state["payroll"]["receipts"]:
+                receipts = self._store.state["payroll"]["receipts"]
+                if original_period is not None and original_period not in receipts:
+                    return {"ok": False, "error": "原到账记录不存在，请刷新后重试。"}
+                if period in receipts and period != original_period:
                     return {"ok": False, "error": "这个工资月份已经记录到账，请勿重复确认。"}
                 updated = copy.deepcopy(self._store.state)
+                original = receipts.get(original_period, {})
+                if original_period is not None:
+                    del updated["payroll"]["receipts"][original_period]
                 updated["payroll"]["receipts"][period] = {
+                    **original,
+                    **({"expected_cents": int(Decimal(str(updated["income"]["monthly_net_salary"])).quantize(Decimal("0.01")) * 100)} if original_period is None else {}),
                     "amount_cents": int(amount * 100), "received_on": received.isoformat(),
-                    "recorded_at": self._clock().isoformat(timespec="seconds"),
+                    "recorded_at": original.get("recorded_at", self._clock().isoformat(timespec="seconds")),
+                    "updated_at": self._clock().isoformat(timespec="seconds"),
                 }
                 self._store.save(updated)
                 self._store.state = updated
@@ -113,6 +130,19 @@ class SalaryAPI:
                 return {"ok": False, "error": "请输入有效的工资月份、非未来到账日期和正数金额（最多两位小数）。"}
             except OSError:
                 return {"ok": False, "error": "到账记录保存失败，请检查目录权限后重试。"}
+
+    def revoke_receipt(self, period):
+        with self._lock:
+            if not isinstance(period, str) or period not in self._store.state["payroll"]["receipts"]:
+                return {"ok": False, "error": "到账记录不存在，请刷新后重试。"}
+            updated = copy.deepcopy(self._store.state)
+            del updated["payroll"]["receipts"][period]
+            try:
+                self._store.save(updated)
+            except OSError:
+                return {"ok": False, "error": "撤销保存失败，记录仍然保留，请重试。"}
+            self._store.state = updated
+            return {"ok": True, "snapshot": self.snapshot()}
 
     def set_pin(self, enabled):
         if not isinstance(enabled, bool):

@@ -102,6 +102,33 @@ class SalaryAPITests(unittest.TestCase):
         self.assertEqual(DataStore(self.path).state["payroll"]["payday"], 31)
         self.assertFalse(DataStore(self.path).state["payroll"]["animations"])
 
+    def test_edit_move_keeps_baseline_and_revoke_persists(self):
+        payload = {"period": "2026-10", "received_on": "2026-10-07", "amount": "2600"}
+        self.assertTrue(self.api.confirm_receipt(payload)["ok"])
+        self.api._store.state["income"]["monthly_net_salary"] = 3000
+        self.assertTrue(self.api.edit_receipt("2026-10", payload | {"period": "2026-09", "amount": "2700.12"})["ok"])
+        records = DataStore(self.path).state["payroll"]["receipts"]
+        self.assertNotIn("2026-10", records)
+        self.assertEqual(records["2026-09"]["amount_cents"], 270012)
+        self.assertEqual(records["2026-09"]["expected_cents"], 260000)
+        self.assertTrue(self.api.revoke_receipt("2026-09")["ok"])
+        self.assertFalse(DataStore(self.path).state["payroll"]["receipts"])
+        self.assertFalse(self.api.revoke_receipt("2026-09")["ok"])
+
+    def test_edit_collision_and_failures_keep_original(self):
+        payload = {"period": "2026-10", "received_on": "2026-10-07", "amount": "2600"}
+        self.api.confirm_receipt(payload)
+        self.api.confirm_receipt(payload | {"period": "2026-09"})
+        before = copy.deepcopy(self.api._store.state)
+        for original, change in [("2026-10", {"period": "2026-09"}), ("2026-08", {}), ("2026-10", {"amount": "nan"})]:
+            self.assertFalse(self.api.edit_receipt(original, payload | change)["ok"])
+            self.assertEqual(self.api._store.state, before)
+        with patch.object(self.api._store, "save", side_effect=OSError("disk")):
+            self.assertFalse(self.api.edit_receipt("2026-10", payload | {"amount": "2700"})["ok"])
+            self.assertFalse(self.api.revoke_receipt("2026-10")["ok"])
+        self.assertEqual(self.api._store.state, before)
+        self.assertEqual(DataStore(self.path).state, before)
+
     def test_native_controls_and_exclusive_classic_handoff(self):
         window = self.api._window = Mock()
         self.assertTrue(self.api.set_pin(True))
