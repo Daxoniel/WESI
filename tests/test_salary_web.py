@@ -1,3 +1,4 @@
+from concurrent.futures import ThreadPoolExecutor
 import copy
 import tempfile
 import unittest
@@ -61,6 +62,45 @@ class SalaryAPITests(unittest.TestCase):
             result = self.api.save_settings({"monthly_net_salary": 3000, "work_start": "09:00", "work_end": "17:00", "employment_start": "2026-01-01 00:00:00"})
         self.assertFalse(result["ok"])
         self.assertEqual(self.api._store.state, before)
+
+    def test_payday_short_month_leap_year_and_year_rollover(self):
+        self.api._store.state["payroll"]["payday"] = 31
+        for now, expected in [(datetime(2028, 2, 2), "2028-02-29"), (datetime(2027, 2, 2), "2027-02-28"), (datetime(2026, 12, 31), "2026-12-31")]:
+            self.now = now
+            self.assertEqual(self.api.snapshot()["next_payday"], expected)
+        self.api._store.state["payroll"]["receipts"]["2026-12"] = {"amount_cents": 100, "received_on": "2026-12-31"}
+        self.assertEqual(self.api.snapshot()["next_payday"], "2027-01-31")
+
+    def test_receipt_persists_cents_and_rejects_duplicate_and_invalid(self):
+        payload = {"period": "2026-10", "received_on": "2026-10-07", "amount": "2600.12"}
+        self.assertTrue(self.api.confirm_receipt(payload)["ok"])
+        self.assertEqual(DataStore(self.path).state["payroll"]["receipts"]["2026-10"]["amount_cents"], 260012)
+        self.assertFalse(self.api.confirm_receipt(payload)["ok"])
+        before = copy.deepcopy(self.api._store.state)
+        for changes in ({"period": "2026-11"}, {"received_on": "2026-10-08"}, {"amount": "nan"}, {"amount": "1.001"}, {"period": "bad"}):
+            self.assertFalse(self.api.confirm_receipt(payload | changes)["ok"])
+            self.assertEqual(self.api._store.state, before)
+
+    def test_concurrent_receipt_requests_commit_once(self):
+        payload = {"period": "2026-10", "received_on": "2026-10-07", "amount": "2600"}
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            results = list(pool.map(self.api.confirm_receipt, [payload]*4))
+        self.assertEqual(sum(result["ok"] for result in results), 1)
+        self.assertEqual(len(DataStore(self.path).state["payroll"]["receipts"]), 1)
+
+    def test_receipt_disk_failure_has_no_memory_effect(self):
+        before = copy.deepcopy(self.api._store.state)
+        with patch.object(self.api._store, "save", side_effect=OSError("disk")):
+            self.assertFalse(self.api.confirm_receipt({"period": "2026-10", "received_on": "2026-10-07", "amount": "2600"})["ok"])
+        self.assertEqual(self.api._store.state, before)
+
+    def test_invalid_payday_and_valid_preference_persist(self):
+        payload = {"monthly_net_salary": "3000", "work_start": "09:00", "work_end": "17:00", "employment_start": "2026-01-01 00:00:00"}
+        for day in (0, 32, True, "1.5"):
+            self.assertFalse(self.api.save_settings(payload | {"payday": day})["ok"])
+        self.assertTrue(self.api.save_settings(payload | {"payday": "31", "animations": False})["ok"])
+        self.assertEqual(DataStore(self.path).state["payroll"]["payday"], 31)
+        self.assertFalse(DataStore(self.path).state["payroll"]["animations"])
 
     def test_native_controls_and_exclusive_classic_handoff(self):
         window = self.api._window = Mock()

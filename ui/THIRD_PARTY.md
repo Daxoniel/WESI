@@ -6,6 +6,7 @@
 | [Lucide](https://github.com/lucide-icons/lucide) | 导航、隐私、置顶、设置及统计图标 | 1.53.0 | ISC，包含源图标的其他授权条款 |
 | [Inter / Fontsource](https://github.com/fontsource/fontsource) | 本地可变字体（拉丁字符） | @fontsource-variable/inter 5.2.8 | OFL-1.1 |
 | [esm-env](https://github.com/benmccann/esm-env) | NumberFlow 的环境依赖 | 见 package-lock.json | MIT |
+| [Kenney UI Pack Pixel Adventure](https://kenney.nl/assets/ui-pack-pixel-adventure) | 到账成功的金币图片，复用原项目素材 | 原始 tile_0039.png | CC0（vendor/KENNEY-LICENSE.txt） |
 | [pywebview](https://github.com/r0x0r/pywebview) | Python 与系统 WebView 桥接 | 6.2.1 | BSD-3-Clause |
 
 JavaScript、字体及对应原始授权文本位于 `vendor/`，运行时完全本地加载。

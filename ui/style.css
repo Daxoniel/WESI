@@ -760,3 +760,17 @@ input {
     animation: none !important;
   }
 }
+
+.wallet-card { margin-top: 18px; padding: 24px; }
+.wallet-icon { color: #a4e9cf; padding: 12px; background: #213b32; border-radius: 14px; }
+.wallet-summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 20px; }
+.wallet-summary strong { display: block; font-size: 28px; margin-top: 8px; }
+.wallet-summary span, #receipt-status, details { color: #91a1aa; font-size: 12px; }
+.wallet-summary .save-button { width: auto; margin: 0; }
+#receipt-history { padding-left: 18px; line-height: 2; }
+.check-label { display: flex; align-items: center; gap: 10px; }
+.check-label input { width: auto; margin: 0; }
+#coin-layer { position: fixed; inset: 0; pointer-events: none; z-index: 100; overflow: hidden; }
+.receipt-coin { position: absolute; width: 28px; height: 28px; image-rendering: pixelated; }
+.compact .wallet-card { display: none; }
+@media (max-width: 550px) { .wallet-summary { align-items: flex-start; flex-direction: column; } }
