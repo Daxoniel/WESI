@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'">
+  <title>WESI · 工资监控</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+  <aside>
+    <div class="brand"><span class="brand-mark"><i data-lucide="wallet"></i></span>WESI<span class="brand-dot">.</span></div>
+    <p class="side-caption">让每一份付出，都看得见</p>
+    <div class="nav-label">你的工作空间</div>
+    <button class="nav-item selected"><i data-lucide="layout-dashboard"></i>工资监控<span class="nav-light"></span></button>
+    <button class="nav-item settings-open"><i data-lucide="settings"></i>工资设置</button>
+    <div class="sidebar-note"><span class="small-label">TIME IS YOURS</span><p>记录工作的价值，<br>留住生活的时间。</p><div class="note-line"></div></div>
+    <button class="nav-item classic" id="classic"><i data-lucide="panel-top"></i>打开其他功能<i data-lucide="chevron-right"></i></button>
+    <div class="version">WESI / LOCAL FIRST</div>
+  </aside>
+  <main>
+    <header>
+      <div><span class="eyebrow">YOUR WORK, IN NUMBERS</span><h1>工资监控<span id="date"></span></h1></div>
+      <div class="toolbar">
+        <button class="icon-button" id="privacy" title="隐藏金额" aria-label="隐藏金额" aria-pressed="false"><i data-lucide="eye"></i></button>
+        <button class="icon-button" id="pin" title="窗口置顶" aria-label="窗口置顶" aria-pressed="false"><i data-lucide="pin"></i></button>
+        <button class="icon-button" id="compact" title="紧凑视图" aria-label="紧凑视图" aria-pressed="false"><i data-lucide="panel-top"></i></button>
+      </div>
+    </header>
+    <div id="connection" role="status">正在连接本地工资引擎…</div>
+    <section class="hero" aria-labelledby="today-label">
+      <div class="hero-top"><span class="section-label" id="today-label"><span class="tiny-square"></span>今日已赚 · 工时估算</span><span class="status" id="status">连接中</span></div>
+      <div class="hero-middle">
+        <div class="amount-block"><number-flow id="amount" aria-label="今日估算收益"></number-flow><span id="masked" hidden>••••••</span><div class="rate"><i data-lucide="activity"></i><span id="rate">—</span><span class="rate-caption">按工作时段累计</span></div></div>
+        <div class="ring-wrap"><svg class="ring" viewBox="0 0 120 120" aria-hidden="true"><circle class="ring-track" cx="60" cy="60" r="51"></circle><circle id="ring-fill" cx="60" cy="60" r="51"></circle></svg><div class="ring-text"><strong id="day-percent">0<span>%</span></strong><span>今日进度</span></div></div>
+      </div>
+      <div class="hero-bottom"><div><i data-lucide="clock"></i><span id="countdown-label">距离下班</span><strong id="countdown">—</strong></div><div class="daily-target">今日目标 <b id="daily-target">—</b></div></div>
+    </section>
+    <section class="metrics" aria-label="收入概览">
+      <article><span class="metric-icon"><i data-lucide="calendar"></i></span><span class="metric-label">本月累计</span><strong id="month">—</strong><small>当前自然月 · 估算收入</small></article>
+      <article><span class="metric-icon"><i data-lucide="arrow-up-right"></i></span><span class="metric-label">入职以来</span><strong id="joined">—</strong><small id="employment">—</small></article>
+      <article><span class="metric-icon"><i data-lucide="clock"></i></span><span class="metric-label">工作时薪</span><strong id="hourly">—</strong><small id="schedule">—</small></article>
+    </section>
+    <section class="period card"><div class="section-heading"><div><h2>本月工资进度</h2><span id="period">—</span></div><span class="period-tag">工时估算</span></div><div class="period-values"><strong id="period-earned">—</strong><span>/ <b id="salary">—</b></span><span id="month-percent">—</span></div><div class="progress-track"><div id="month-fill"></div></div><div class="period-foot"><span>以平均工作日折算，实际到账以工资单为准</span><button class="text-button settings-open">调整工资设置<i data-lucide="chevron-right"></i></button></div></section>
+    <footer><span><span class="local-dot"></span>数据保存在本机 · 不连接银行</span><span>你的时间，值得被看见。</span></footer>
+  </main>
+</div>
+<dialog id="settings-dialog" aria-labelledby="settings-title">
+  <form id="settings-form"><div class="dialog-head"><div><span class="eyebrow">MAKE IT YOURS</span><h2 id="settings-title">工资与工作时间</h2></div><button type="button" class="icon-button" id="settings-close" aria-label="关闭设置"><i data-lucide="x"></i></button></div>
+    <label>月净收入 (€)<input id="salary-input" name="monthly_net_salary" type="number" step="any" min="0.01" required></label>
+    <div class="form-row"><label>上班时间<input id="start-input" name="work_start" type="time" required></label><label>下班时间<input id="end-input" name="work_end" type="time" required></label></div>
+    <label>入职时间<input id="employment-input" name="employment_start" type="datetime-local" step="1" required></label>
+    <p class="form-note">周一至周五的当日班次。不计午休和节假日；修改设置会重新估算历史累计。</p>
+    <div class="form-error" id="settings-error" role="alert"></div><button class="save-button" type="submit">保存并更新监控<i data-lucide="check"></i></button>
+  </form>
+</dialog>
+<script type="module" src="app.js"></script>
+</body></html>

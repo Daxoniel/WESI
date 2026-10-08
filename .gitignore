@@ -3,5 +3,8 @@ __pycache__/
 .venv/
 venv/
 .env
+ui/node_modules/
+ui/test-results/
+ui/playwright-report/
 data/tarot_cards_zh.json
 data/tarot-images.json
