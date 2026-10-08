@@ -23,6 +23,19 @@ test.beforeEach(async ({ page }) => {
         window.fixture.payroll.receipts[payload.period] = {amount_cents: Math.round(Number(payload.amount)*100), received_on: payload.received_on};
         return {ok:true, snapshot:window.fixture};
       },
+      edit_receipt: async (original, payload) => {
+        if (window.failReceipt) return {ok:false, error:'保存失败'};
+        if (payload.period !== original && window.fixture.payroll.receipts[payload.period]) return {ok:false, error:'已经记录到账'};
+        const receipt = window.fixture.payroll.receipts[original];
+        delete window.fixture.payroll.receipts[original];
+        window.fixture.payroll.receipts[payload.period] = {...receipt, amount_cents: Math.round(Number(payload.amount)*100), received_on: payload.received_on};
+        return {ok:true, snapshot:window.fixture};
+      },
+      revoke_receipt: async period => {
+        if (window.failReceipt) return {ok:false, error:'撤销保存失败'};
+        delete window.fixture.payroll.receipts[period];
+        return {ok:true, snapshot:window.fixture};
+      },
       set_pin: async value => { window.calls.push(['pin', value]); return value; },
       set_compact: async value => { window.calls.push(['compact', value]); return value; },
       open_classic: async () => window.calls.push(['classic']),
@@ -124,4 +137,44 @@ test('failed receipt does not celebrate and reduced motion skips coins', async (
   await page.getByRole('button', {name:'保存到账记录'}).click();
   await expect(page.locator('#wallet-total')).toHaveText('€2,600.00');
   await expect(page.locator('.receipt-coin')).toHaveCount(0);
+});
+
+test('wallet edits compare salary, skip animation and revoke only after confirmation', async ({ page }) => {
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.locator('#receipt-open').click();
+  await page.getByRole('button', {name:'保存到账记录'}).click();
+  await page.locator('#wallet-icon').click();
+  await expect(page.locator('#wallet-details')).toHaveAttribute('open', '');
+  await page.getByRole('button', {name:'编辑 2026-10 到账记录'}).click();
+  await page.locator('#receipt-amount').fill('2700');
+  await page.emulateMedia({reducedMotion:'no-preference'});
+  await page.getByRole('button', {name:'保存修改'}).click();
+  await expect(page.locator('#wallet-total')).toHaveText('€2,700.00');
+  await expect(page.locator('#receipt-history')).toContainText('差额 €100.00');
+  await expect(page.locator('.receipt-coin')).toHaveCount(0);
+  page.once('dialog', dialog => dialog.dismiss());
+  await page.getByRole('button', {name:'撤销 2026-10 到账记录'}).click();
+  await expect(page.locator('#wallet-total')).toHaveText('€2,700.00');
+  page.once('dialog', dialog => dialog.accept());
+  await page.getByRole('button', {name:'撤销 2026-10 到账记录'}).click();
+  await expect(page.locator('#wallet-total')).toHaveText('€0.00');
+  await expect(page.locator('#receipt-history')).toHaveText('暂无到账记录');
+});
+
+test('editing failure keeps dialog and record; revocation failure preserves wallet', async ({ page }) => {
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.locator('#receipt-open').click();
+  await page.getByRole('button', {name:'保存到账记录'}).click();
+  await page.locator('#wallet-icon').click();
+  await page.evaluate(() => {window.failReceipt = true;});
+  await page.getByRole('button', {name:'编辑 2026-10 到账记录'}).click();
+  await page.locator('#receipt-amount').fill('2900');
+  await page.getByRole('button', {name:'保存修改'}).click();
+  await expect(page.locator('#receipt-error')).toHaveText('保存失败');
+  await expect(page.locator('#wallet-total')).toHaveText('€2,600.00');
+  await page.locator('#receipt-close').click();
+  page.once('dialog', dialog => dialog.accept());
+  await page.getByRole('button', {name:'撤销 2026-10 到账记录'}).click();
+  await expect(page.locator('#receipt-notice')).toHaveText('撤销保存失败');
+  await expect(page.locator('#wallet-total')).toHaveText('€2,600.00');
 });

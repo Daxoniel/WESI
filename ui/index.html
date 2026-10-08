@@ -42,9 +42,9 @@
     </section>
     <section class="period card"><div class="section-heading"><div><h2>本月工资进度</h2><span id="period">—</span></div><span class="period-tag">工时估算</span></div><div class="period-values"><strong id="period-earned">—</strong><span>/ <b id="salary">—</b></span><span id="month-percent">—</span></div><div class="progress-track"><div id="month-fill"></div></div><div class="period-foot"><span>以平均工作日折算，实际到账以工资单为准</span><button class="text-button settings-open">调整工资设置<i data-lucide="chevron-right"></i></button></div></section>
     <section class="wallet-card card" aria-label="工资到账">
-      <div class="section-heading"><div><h2>发薪与钱包</h2><span id="payday-info">每月 28 日</span></div><span id="wallet-icon" class="wallet-icon"><i data-lucide="wallet"></i></span></div>
+      <div class="section-heading"><div><h2>发薪与钱包</h2><span id="payday-info">每月 28 日</span></div><button id="wallet-icon" class="wallet-icon" aria-label="展开到账明细" aria-expanded="false"><i data-lucide="wallet"></i></button></div>
       <div class="wallet-summary"><div><span>手动确认到账合计</span><strong id="wallet-total">—</strong></div><button id="receipt-open" class="save-button">确认工资到账</button></div>
-      <p id="receipt-status" role="status"></p><details><summary>到账历史</summary><ul id="receipt-history"></ul></details>
+      <p id="receipt-status" role="status"></p><p id="receipt-notice" role="status"></p><details id="wallet-details"><summary>到账历史与月薪对照</summary><ul id="receipt-history"></ul></details>
     </section>
     <footer><span><span class="local-dot"></span>数据保存在本机 · 不连接银行</span><span>你的时间，值得被看见。</span></footer>
   </main>
@@ -66,7 +66,7 @@
   <label>工资所属月份<input id="receipt-period" type="month" required></label>
   <label>实际到账金额 (€)<input id="receipt-amount" type="number" min="0.01" max="1000000000" step="0.01" required></label>
   <label>实际到账日期<input id="receipt-date" type="date" required></label>
-  <p class="form-note">请确认银行或工资单后再记录。每个工资月份只能确认一次；此操作不会改变工时估算。</p>
+  <p class="form-note">请确认银行或工资单后再记录。每个工资月份只保留一笔；修改或撤销不会改变工时估算。</p>
   <div id="receipt-error" class="form-error" role="alert"></div><button class="save-button" type="submit">保存到账记录</button>
 </form></dialog>
 <div id="coin-layer" aria-hidden="true"></div>
