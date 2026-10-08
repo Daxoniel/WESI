@@ -796,5 +796,10 @@ class WESI:
         self.root.mainloop()
 
 if __name__ == "__main__":
-    app = WESI()
-    app.run()
+    import sys
+    if "--classic" in sys.argv:
+        WESI().run()
+    else:
+        from salary_web import launch
+        if launch():
+            WESI().run()

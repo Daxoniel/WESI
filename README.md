@@ -9,15 +9,29 @@ Wage Extraction & Survival Interface
 - 塔罗
 - 虚拟宠物与收集系统
 
-开发环境：Python 3.10+（云环境使用 3.12）、Tk、requirements.txt 中固定的依赖。
+默认启动新的工资监控桌面界面，使用 [NumberFlow](https://github.com/barvian/number-flow) 金额动画、[Lucide](https://github.com/lucide-icons/lucide) 图标和 pywebview。支持金额隐私、窗口置顶、紧凑视图、工作倒计时和工资设置。组件、字体与授权说明见 [ui/THIRD_PARTY.md](ui/THIRD_PARTY.md)，运行无需 Node.js 或联网下载美术资源。
+
+![工资监控预览（演示数据）](docs/screenshots/salary-web.png)
+
+推荐 Python 3.12。Windows 在项目目录执行：
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe main.py
+```
+
+Windows 使用系统 Edge WebView2；缺少运行时可从 [微软官网](https://developer.microsoft.com/microsoft-edge/webview2/) 安装。当前版本已在 Linux Qt 后端验证，Windows 外观仍需本地验收。
+
+Linux 需要图形显示、Tk 与 Qt 平台依赖：
 
 ```bash
 python -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-.venv/bin/python main.py
+.venv/bin/python -m pip install -r requirements-linux-ui.txt
+QT_API=pyside6 .venv/bin/python main.py
 ```
 
-Windows 下使用 `.venv\Scripts\python.exe`。Linux 需可用的 Tk 和图形显示；无桌面环境可用 Xvfb 执行窗口测试。
+点击“打开其他功能”切换到原来的 Tk 界面，或运行 `python main.py --classic`。切换时会关闭工资监控窗口，避免两个界面同时写入存档。
 
 工资设置支持周一至周五的当日上下班时段，默认 09:00–17:00，只在该时段内累计。
 日收入按 `月净收入 × 12 ÷ (52 × 5)` 估算，再按当日班次时长均摊；显示流速与累计使用同一算法。
@@ -38,18 +52,24 @@ python tools/make_tarot_json.py --output /tmp/wesi-tarot-cards.json
 诗词接口不可用时会回退到本地内容；网络请求在后台执行，不阻塞窗口。
 宠物摸鱼不依赖宠物窗口：关闭窗口仍会完成，退出程序后再次打开会恢复未完成的一次任务。
 
-工资主页增加像素风价值回收站：变化数字滚动、工作状态与上下班倒计时、传送带和可点击的钱罐。
-“收取”把已累计的完整分币收入展示钱罐，不代表银行实际到账，也不改变工资计算。
-钱罐每日重置，收取记录、目标金额（默认 €10）与安静模式保存在 `salary_display` 中；旧档会自动补齐。
-安静模式关闭数字滚动、传送带运动及庆祝粒子。窗口较小时可以滚动查看下方功能。
-像素金币来自 Kenney 的 CC0 资源，出处及授权文件位于 `assets/salary/`。
+新版工资监控不包含游戏币或收取玩法，显示的是工资估算，并非银行实际到账记录。月度进度按自然月估算；尚未接入真实发薪周期或银行接口。
+旧版像素钱罐仍保留在经典界面，原有 `salary_display` 存档保持兼容。其 Kenney CC0 素材授权位于 `assets/salary/`。
 
 回归检查（GUI 检查自动使用临时存档，不修改个人数据）：
 
 ```bash
-python -m unittest discover -s tests -p test_core.py -v
 # 在可用的图形显示下运行全部检查；无 DISPLAY 时 GUI 检查会跳过
 python -m unittest discover -s tests -v
 ```
+
+真实 WebView 检查（临时存档，需要图形显示）：
+
+```bash
+python tools/check_webview.py
+# Linux Qt 后端
+QT_API=pyside6 python tools/check_webview.py --gui qt
+```
+
+前端交互检查和组件重建方法见 [ui/THIRD_PARTY.md](ui/THIRD_PARTY.md)。
 
 第一轮代码审阅与后续计划见 [docs/REVIEW.md](docs/REVIEW.md)。
