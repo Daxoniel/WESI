@@ -15,6 +15,17 @@ const pressed = (id, value) => $(id).setAttribute('aria-pressed', String(value))
 
 function render(data) {
   current = data;
+  const payroll = data.payroll || {payday: 28, animations: true, receipts: {}};
+  text('payday-info', `每月 ${payroll.payday} 日 · 下次 ${data.next_payday || '—'}${data.payday_days === undefined ? '' : ` · ${data.payday_days === 0 ? '今天发薪' : `还有 ${data.payday_days} 天`}`}`);
+  const entries = Object.entries(payroll.receipts).sort(([a], [b]) => b.localeCompare(a));
+  text('wallet-total', financial(entries.reduce((sum, [, receipt]) => sum + receipt.amount_cents / 100, 0)));
+  $('receipt-history').replaceChildren(...entries.map(([period, receipt]) => {
+    const item = document.createElement('li');
+    item.textContent = `${period} · ${receipt.received_on} · ${financial(receipt.amount_cents / 100)}`;
+    return item;
+  }));
+  if (!entries.length) {const li = document.createElement('li'); li.textContent = '暂无到账记录'; $('receipt-history').append(li);}
+  text('receipt-status', payroll.receipts[data.date.slice(0, 7)] ? '本月工资已记录到账' : '本月工资尚未确认到账');
   text('date', data.date.replaceAll('-', ' / '));
   text('status', data.status);
   $('status').classList.toggle('active', data.active);
@@ -75,6 +86,7 @@ setTimeout(() => {
 
 $('privacy').addEventListener('click', () => {
   privacy = !privacy;
+  if (privacy) $('coin-layer').replaceChildren();
   pressed('privacy', privacy);
   $('privacy').title = privacy ? '显示金额' : '隐藏金额';
   $('privacy').setAttribute('aria-label', $('privacy').title);
@@ -104,6 +116,8 @@ $('classic').addEventListener('click', async () => {
 
 document.querySelectorAll('.settings-open').forEach(button => button.addEventListener('click', () => {
   if (!current) return;
+  $('payday-input').value = current.payroll?.payday || 28;
+  $('animations-input').checked = current.payroll?.animations !== false;
   $('salary-input').value = current.income.monthly_net_salary;
   $('start-input').value = current.income.work_start;
   $('end-input').value = current.income.work_end;
@@ -121,6 +135,7 @@ $('settings-form').addEventListener('submit', async event => {
   button.disabled = true;
   const employment = $('employment-input').value;
   const payload = {
+    payday: $('payday-input').value, animations: $('animations-input').checked,
     monthly_net_salary: $('salary-input').value,
     work_start: $('start-input').value, work_end: $('end-input').value,
     employment_start: employment.replace('T', ' ') + (employment.length === 16 ? ':00' : ''),
@@ -138,4 +153,55 @@ document.addEventListener('visibilitychange', () => {
     // Keep a single polling chain: the existing timer will refresh shortly.
     text('connection', '正在同步本地数据…');
   }
+});
+
+$('receipt-open').addEventListener('click', () => {
+  if (!current || saving) return;
+  $('receipt-period').value = current.date.slice(0, 7);
+  $('receipt-period').max = current.date.slice(0, 7);
+  $('receipt-date').value = current.date;
+  $('receipt-date').max = current.date;
+  $('receipt-amount').value = current.income.monthly_net_salary;
+  text('receipt-error', '');
+  $('receipt-dialog').showModal();
+});
+$('receipt-close').addEventListener('click', () => $('receipt-dialog').close());
+function celebrateReceipt() {
+  if (privacy || current.payroll?.animations === false || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const target = $('wallet-icon').getBoundingClientRect();
+  const source = $('receipt-open').getBoundingClientRect();
+  const layer = $('coin-layer');
+  for (let i = 0; i < 16; i++) {
+    const coin = document.createElement('img');
+    coin.src = './vendor/coin.png'; coin.className = 'receipt-coin';
+    coin.style.left = `${source.left + source.width / 2}px`;
+    coin.style.top = `${source.top + source.height / 2}px`;
+    layer.append(coin);
+    const dx = target.left + target.width/2 - source.left - source.width/2;
+    const dy = target.top + target.height/2 - source.top - source.height/2;
+    const animation = coin.animate([
+      {transform: 'translate(-50%, -50%) scale(.5)', opacity: 0},
+      {transform: `translate(${dx/2 + (i%5-2)*24}px, ${dy/2-75-i%3*15}px) rotate(160deg)`, opacity: 1, offset: .45},
+      {transform: `translate(${dx}px, ${dy}px) rotate(360deg) scale(.25)`, opacity: 0},
+    ], {duration: 800, delay: i*45, easing: 'ease-in-out'});
+    animation.onfinish = () => coin.remove();
+    animation.oncancel = () => coin.remove();
+  }
+  $('wallet-icon').animate([{transform:'scale(1)'},{transform:'scale(1.25)'},{transform:'scale(1)'}], {duration:400, delay:1000});
+}
+$('receipt-form').addEventListener('submit', async event => {
+  event.preventDefault();
+  if (saving) return;
+  const button = event.submitter;
+  saving = true; generation += 1; button.disabled = true;
+  try {
+    const result = await api().confirm_receipt({
+      period: $('receipt-period').value, amount: $('receipt-amount').value, received_on: $('receipt-date').value,
+    });
+    if (!result.ok) {text('receipt-error', result.error); return;}
+    render(result.snapshot);
+    $('receipt-dialog').close();
+    celebrateReceipt();
+  } catch {text('receipt-error', '未能确认记录是否保存，请重试；同一月份不会重复记账。');}
+  finally {saving = false; button.disabled = false;}
 });

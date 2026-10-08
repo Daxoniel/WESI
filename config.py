@@ -74,6 +74,7 @@ SPREAD_LABELS = {
 # Defaults / storage
 # =========================
 DEFAULT_STATE: Dict[str, Any] = {
+    "payroll": {"payday": 28, "animations": True, "receipts": {}},
     "salary_display": {
         "goal_amount": 10.0,
         "quiet": False,

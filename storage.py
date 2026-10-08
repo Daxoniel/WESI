@@ -91,6 +91,9 @@ class DataStore:
             income.update(copy.deepcopy(DEFAULT_STATE["income"]))
         if repairs and self.path.exists():
             preserve_invalid(self.path)
+        payroll = self.state["payroll"]
+        if isinstance(payroll["payday"], bool) or not isinstance(payroll["payday"], int) or not 1 <= payroll["payday"] <= 31:
+            payroll["payday"] = 28
         display = self.state["salary_display"]
         if not .01 <= display["goal_amount"] <= 1000000:
             display["goal_amount"] = DEFAULT_STATE["salary_display"]["goal_amount"]

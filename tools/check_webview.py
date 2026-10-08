@@ -34,6 +34,9 @@ def main():
             try:
                 wait_for("document.getElementById('status')?.textContent === '工作中'")
                 assert window.evaluate_js("document.getElementById('amount').value") == 60
+                window.evaluate_js("document.getElementById('receipt-open').click(); document.getElementById('receipt-form').requestSubmit(document.querySelector('#receipt-form button[type=submit]'))")
+                wait_for("document.getElementById('wallet-total').textContent === '€2,600.00'")
+                assert api._store.state["payroll"]["receipts"]["2026-10"]["amount_cents"] == 260000
                 window.evaluate_js("document.getElementById('privacy').click()")
                 wait_for("document.getElementById('amount').hidden")
                 window.evaluate_js("document.getElementById('pin').click()")
@@ -42,7 +45,7 @@ def main():
                 window.evaluate_js("document.getElementById('compact').click()")
                 wait_for("document.body.classList.contains('compact')")
                 assert window.width == 420 and window.height == 440
-                print("PASS: native WebView, real Python snapshot, NumberFlow, privacy, native pin and compact resize")
+                print("PASS: native WebView, real Python snapshot, NumberFlow, persisted salary receipt, privacy, native pin and compact resize")
             except Exception as exc:
                 errors.append(exc)
             finally:

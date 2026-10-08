@@ -2,7 +2,8 @@
 import calendar
 import copy
 import threading
-from datetime import datetime
+from decimal import Decimal, InvalidOperation
+from datetime import datetime, date
 from pathlib import Path
 
 from config import DATA_FILE
@@ -36,8 +37,15 @@ class SalaryAPI:
                 status, deadline, label = "工作中", datetime.combine(now.date(), end), "距离下班"
             else:
                 status, deadline, label = "已下班", None, "今天辛苦了"
+            payroll = copy.deepcopy(self._store.state["payroll"])
+            due = date(now.year, now.month, min(payroll["payday"], calendar.monthrange(now.year, now.month)[1]))
+            period_key = now.strftime("%Y-%m")
+            if now.date() > due or period_key in payroll["receipts"]:
+                year, month = (now.year+1, 1) if now.month == 12 else (now.year, now.month+1)
+                due = date(year, month, min(payroll["payday"], calendar.monthrange(year, month)[1]))
             last_day = calendar.monthrange(now.year, now.month)[1]
             return {
+                "payroll": payroll, "next_payday": due.isoformat(), "payday_days": (due-now.date()).days,
                 "income": income, "stats": stats, "active": active, "status": status,
                 "seconds_left": max(0, int((deadline-now).total_seconds())) if deadline else None,
                 "countdown_label": label, "date": now.strftime("%Y-%m-%d"),
@@ -52,11 +60,18 @@ class SalaryAPI:
             try:
                 if not isinstance(payload, dict):
                     raise ValueError("设置格式无效。")
+                payday = payload.get("payday", self._store.state["payroll"]["payday"])
+                if isinstance(payday, bool) or str(payday) not in [str(n) for n in range(1, 32)]:
+                    raise ValueError("Invalid payday")
+                animations = payload.get("animations", self._store.state["payroll"]["animations"])
+                if not isinstance(animations, bool):
+                    raise ValueError("Invalid animation preference")
                 salary = float(payload["monthly_net_salary"])
                 begin, end = validate_schedule(payload["work_start"], payload["work_end"])
                 hours = ((end.hour*60+end.minute)-(begin.hour*60+begin.minute))/60*5
                 validate_income(salary, hours, payload["employment_start"])
                 updated = copy.deepcopy(self._store.state)
+                updated["payroll"].update(payday=int(payday), animations=animations)
                 updated["income"].update(
                     monthly_net_salary=salary, weekly_work_hours=hours,
                     work_start=begin.strftime("%H:%M"), work_end=end.strftime("%H:%M"),
@@ -70,6 +85,34 @@ class SalaryAPI:
                 return {"ok": False, "error": "请输入有效的正数月薪、入职日期和当日上下班时间。"}
             except OSError:
                 return {"ok": False, "error": "无法保存设置，请检查存档目录的写入权限。"}
+
+    def confirm_receipt(self, payload):
+        """One durable receipt per salary month; lock also covers duplicate requests."""
+        with self._lock:
+            try:
+                period = payload["period"]
+                period_date = datetime.strptime(period + "-01", "%Y-%m-%d").date()
+                received = date.fromisoformat(payload["received_on"])
+                now = self._clock().date()
+                if period_date.strftime("%Y-%m") != period or period_date > now or received > now:
+                    raise ValueError("Future/invalid date")
+                amount = Decimal(str(payload["amount"]))
+                if not amount.is_finite() or not Decimal("0.01") <= amount <= Decimal("1000000000") or amount != amount.quantize(Decimal("0.01")):
+                    raise ValueError("Invalid amount")
+                if period in self._store.state["payroll"]["receipts"]:
+                    return {"ok": False, "error": "这个工资月份已经记录到账，请勿重复确认。"}
+                updated = copy.deepcopy(self._store.state)
+                updated["payroll"]["receipts"][period] = {
+                    "amount_cents": int(amount * 100), "received_on": received.isoformat(),
+                    "recorded_at": self._clock().isoformat(timespec="seconds"),
+                }
+                self._store.save(updated)
+                self._store.state = updated
+                return {"ok": True, "snapshot": self.snapshot()}
+            except (ValueError, TypeError, KeyError, InvalidOperation, OverflowError):
+                return {"ok": False, "error": "请输入有效的工资月份、非未来到账日期和正数金额（最多两位小数）。"}
+            except OSError:
+                return {"ok": False, "error": "到账记录保存失败，请检查目录权限后重试。"}
 
     def set_pin(self, enabled):
         if not isinstance(enabled, bool):
