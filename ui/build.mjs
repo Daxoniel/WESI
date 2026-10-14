@@ -14,3 +14,5 @@ for (const [source, target] of [
 
 await copyFile('../assets/salary/coin.png', 'vendor/coin.png');
 await copyFile('../assets/salary/KENNEY-LICENSE.txt', 'vendor/KENNEY-LICENSE.txt');
+await build({entryPoints:['pet-engine-entry.js'], bundle:true, minify:true,
+  format:'esm', legalComments:'eof', outfile:'vendor/pet-engine.js'});

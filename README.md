@@ -120,3 +120,17 @@ python tools/evaluate_tarot_reading.py --ai --output /tmp/tarot-model-review.jso
 ```
 
 评审重点是是否回答问题、是否解释牌位之间的矛盾、是否考虑相反线索、行动是否具体、是否编造个人事实。导出文件默认标为“未评审”，不自动打语义质量分。
+
+## 桌宠与文字放置冒险
+
+默认工资页左侧点击“宠物与冒险”，或运行 `python main.py --pet`。点击“放到桌面”打开置顶、无边框的透明伙伴窗口：顶部把手拖动窗口，点击小黄鸭互动，“冒险”返回游戏页，“×”关闭桌宠。主程序关闭或切换经典界面时桌宠也关闭。
+
+实际接入 [VS Code Pets](https://github.com/tonybaloney/vscode-pets) 的 MIT 引擎与 Marc Duiker 小黄鸭动画；普通用户无需 VS Code 或 Node.js。出处和固定源码见 [ui/vendor/vscode-pets/UPSTREAM.md](ui/vendor/vscode-pets/UPSTREAM.md)。本轮小黄鸭会在自己的窗口内行走/跑步，尚不检测其他应用边缘或穿透点击；Windows WebView2 的透明与拖动外观需要本地验收。Linux 透明显示还取决于桌面合成器。
+
+文字游戏有公园散步（1 分钟）、林间采集（5 分钟）、旧城探索（15 分钟）。一次派出一趟，退出后回来会结算一次，不按离线天数重复产出。探索获得经验、干粮、树枝和石片；喂食消耗干粮，公园可补充。摸摸/喂食每种互动间隔一分钟，提高亲密度。用树枝与石片升级小窝，最多 5 级；每级给之后派出的任务增加 2 经验，不改写已在途任务。
+
+新进度保存在 app_state.json 的 pet_game，沿用旧宠物名称和亲密度，保留原背包与历史。所有虚拟物品都与现实工资无关。文字冒险日志最多保留 50 条，保留总经验与材料。桌宠与工资页使用同一存档写入器，原经典宠物页保持兼容。
+
+![伙伴小屋预览（演示存档）](docs/screenshots/pet-companion.png)
+
+真实桌面检查：`QT_API=pyside6 python tools/check_pet_webview.py`，使用临时存档，验证上游精灵、置顶窗口、互动、唯一窗口、共享存档及一次性离线奖励。
