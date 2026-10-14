@@ -11,6 +11,8 @@ from uuid import uuid4
 from config import PROJECT_DIR, TAROT_DIR, TAROT_HISTORY_FILE
 from storage import read_json, write_json
 from utils import load_tarot_cards
+from tarot_reading import synthesize
+import tarot_ai
 
 
 def spread(label, description, positions, coordinates=None):
@@ -47,11 +49,12 @@ class TarotService:
         self.clock = clock
         self.rng = rng or random.SystemRandom()
         self.lock = threading.RLock()
+        self._pending_ai = {}
         self.deck = load_tarot_cards()
         self.meanings = json.loads((PROJECT_DIR / "data/tarot_meanings_zh.json").read_text(encoding="utf-8"))
 
     def catalog(self):
-        return {"spreads": SPREADS, "deck_size": len(self.deck)}
+        return {"spreads": SPREADS, "deck_size": len(self.deck), "ai": tarot_ai.status()}
 
     def image(self, filename):
         path = TAROT_DIR / Path(filename).name
@@ -82,6 +85,7 @@ class TarotService:
                 "question": question.strip(), "spread": spread_key, "spread_label": layout["label"],
                 "layout": copy.deepcopy(layout), "cards": cards,
                 "summary": "离线牌义提供反思线索，不会自动推断你的问题。逐张对照牌位，再检查不同主题之间的联系。"}
+            entry["synthesis"] = synthesize(entry)
             try:
                 history = read_json(self.path, [], list)
                 history.append(entry)
@@ -93,3 +97,28 @@ class TarotService:
     def history(self):
         with self.lock:
             return list(reversed(read_json(self.path, [], list)))
+
+    def ai_reading(self, entry_id):
+        # Serialize generation to avoid duplicate provider charges for one entry.
+        with self.lock:
+            try:
+                history = read_json(self.path, [], list)
+                entry = next((item for item in history if isinstance(item, dict) and item.get('id') == entry_id), None)
+                if not entry:
+                    return {'ok': False, 'error': '阅读记录不存在，请从历史选择一条新版记录。'}
+                if entry.get('ai_reading'):
+                    return {'ok': True, 'entry': entry}
+                report = self._pending_ai.get(entry_id)
+                if report is None:
+                    report = tarot_ai.interpret(copy.deepcopy(entry))
+                    self._pending_ai[entry_id] = report
+                updated = copy.deepcopy(history)
+                target = next(item for item in updated if isinstance(item, dict) and item.get('id') == entry_id)
+                target['ai_reading'] = report
+                write_json(self.path, updated)
+                self._pending_ai.pop(entry_id, None)
+                return {'ok': True, 'entry': target}
+            except OSError:
+                return {'ok': False, 'error': 'AI 请求或历史保存失败；原阅读保留，请检查服务与目录权限。'}
+            except (ValueError, KeyError, TypeError, IndexError):
+                return {'ok': False, 'error': 'AI 配置或响应格式无效；原离线解读仍可使用。'}

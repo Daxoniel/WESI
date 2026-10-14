@@ -41,6 +41,43 @@ function showReading(index) {
     const paragraph = document.createElement('p'); paragraph.textContent = value; return [heading, paragraph];
   }));
 }
+function reportNodes(report) {
+  const nodes = [];
+  if (!report) return nodes;
+  const overview = document.createElement('p'); overview.textContent = report.overview; nodes.push(overview);
+  const labels = {themes:'整体主题',relations:'牌间关系',actions:'可执行的下一步',questions:'值得核实的问题'};
+  for (const [key,label] of Object.entries(labels)) {
+    if (!report[key]?.length) continue;
+    const heading = document.createElement('h3'); heading.textContent = label;
+    const list = document.createElement('ul');
+    for (const value of report[key]) {const li = document.createElement('li');li.textContent=value;list.append(li);}
+    nodes.push(heading,list);
+  }
+  const method = document.createElement('small');method.textContent=report.method || '';nodes.push(method);
+  return nodes;
+}
+function wholeReading() {
+  const allRevealed = current && revealed.size === current.cards.length;
+  $('whole-reading').hidden = !allRevealed;
+  if (!allRevealed) return;
+  $('offline-reading').replaceChildren(...reportNodes(current.synthesis));
+  if (!current.synthesis) $('offline-reading').textContent = '旧记录未保存整组解读，保留原始单牌文字。';
+  $('ai-reading').replaceChildren(...reportNodes(current.ai_reading));
+  $('ai-generate').hidden = !!current.ai_reading;
+  $('ai-generate').disabled = busy || !catalog.ai?.available || !current.id;
+  $('ai-note').textContent = current.ai_reading ? `已保存 ${current.ai_reading.model} 的解读，重看不会再次调用 AI。` : catalog.ai?.available ? `模型 ${catalog.ai.model}。点击后将当前问题、牌位与牌义发送到配置的服务，可能产生费用。` : 'AI 默认关闭；可配置服务地址、模型和密钥后重新启动。离线整组解读无需联网。';
+}
+$('ai-generate').addEventListener('click', async () => {
+  if (busy || !current?.id || !confirm('将本次问题和抽出的牌发送到你配置的 AI 服务生成解读？')) return;
+  busy = true; $('ai-generate').disabled = true; $('draw').disabled = true; $('history-open').disabled = true;
+  notice('正在生成深入解读，牌面和正逆位保持不变…');
+  try {
+    const result = await api().tarot_ai_reading(current.id);
+    if (!result.ok) {notice(result.error); return;}
+    current = result.entry; wholeReading(); notice('AI 解读已保存，没有重新抽牌。');
+  } catch {notice('AI 请求未确认；离线阅读仍保留，可从历史检查结果。');}
+  finally {busy = false; $('draw').disabled = false; $('history-open').disabled = false; wholeReading();}
+});
 function reveal(index) {
   revealed.add(index);
   const button = $('table').children[index];
@@ -48,9 +85,10 @@ function reveal(index) {
   button.setAttribute('aria-label', `${current.cards[index].position}：${current.cards[index].name_zh} ${current.cards[index].reversed ? '逆位' : '正位'}`);
   button.querySelector('.card-caption').textContent = `${index+1} ${current.cards[index].position} · ${current.cards[index].name_zh}`;
   showReading(index);
+  wholeReading();
 }
 async function renderEntry(entry, history = false) {
-  current = entry; revealed.clear();
+  current = entry; revealed.clear(); $('whole-reading').hidden = true;
   $('reading-title').textContent = entry.spread_label || catalog.spreads[entry.spread]?.label || entry.spread;
   $('reading-question').textContent = `${entry.time} · ${entry.question || '未填写问题'}`;
   $('summary').textContent = entry.summary || '旧记录：保留当次解读，不重新生成。';
@@ -82,13 +120,13 @@ async function renderEntry(entry, history = false) {
 $('reveal-all').addEventListener('click', () => current?.cards.forEach((_, index) => reveal(index)));
 $('draw-form').addEventListener('submit', async event => {
   event.preventDefault(); if (busy || !catalog) return;
-  busy = true; $('draw').disabled = true; notice('正在洗牌并保存这次阅读…');
+  busy = true; $('draw').disabled = true; $('history-open').disabled = true; notice('正在洗牌并保存这次阅读…');
   try {
     const result = await api().tarot_draw($('spread').value, $('question').value);
     if (!result.ok) {notice(result.error); return;}
     await renderEntry(result.entry); notice('阅读已保存。请逐张翻牌。');
   } catch {notice('抽牌结果未确认，请先查看历史记录再重试。');}
-  finally {busy = false; $('draw').disabled = false;}
+  finally {busy = false; $('draw').disabled = false; $('history-open').disabled = false; wholeReading();}
 });
 $('history-open').addEventListener('click', async () => {
   try {
