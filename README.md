@@ -11,7 +11,7 @@ Wage Extraction & Survival Interface
 
 默认启动新的工资监控桌面界面，使用 [NumberFlow](https://github.com/barvian/number-flow) 金额动画、[Lucide](https://github.com/lucide-icons/lucide) 图标和 pywebview。支持金额隐私、窗口置顶、紧凑视图、工作倒计时和工资设置。
 
-发薪日默认每月 28 日，可在设置中调整为 1–31 日；短月使用月末，不自动因周末提前或顺延。工资月份与实际到账日期分别记录，每个工资月份只能确认一次，金额以整数分保存。确认成功后金币飞入钱包；可关闭动画，隐藏金额或系统减少动态效果时也不播放。钱包合计为手动确认记录的总额，不是银行余额。当前不支持分笔到账或记录编辑，确认前请核对金额和月份。组件、字体与授权说明见 [ui/THIRD_PARTY.md](ui/THIRD_PARTY.md)，运行无需 Node.js 或联网下载美术资源。
+发薪日默认每月 28 日，可在设置中调整为 1–31 日；短月使用月末，不自动因周末提前或顺延。工资月份与实际到账日期分别记录，每个工资月份只能确认一次，金额以整数分保存。确认成功后金币飞入钱包；可关闭动画，隐藏金额或系统减少动态效果时也不播放。钱包合计为手动确认记录的总额，不是银行余额。点击钱包展开明细，可编辑金额、到账日期和所属月份，或经确认撤销记录。修改月份不会覆盖已有记录。新增记录保留当时的设置月薪，显示实际到账与月薪差额；旧记录标注当前设置月薪参考，不能还原历史月薪。差额不代表扣税或扣款的自动判断。编辑不播放金币动画，撤销后可重新确认。当前仍不支持分笔到账。组件、字体与授权说明见 [ui/THIRD_PARTY.md](ui/THIRD_PARTY.md)，运行无需 Node.js 或联网下载美术资源。
 
 ![工资监控预览（演示数据）](docs/screenshots/salary-web.png)
 
@@ -75,3 +75,17 @@ QT_API=pyside6 python tools/check_webview.py --gui qt
 前端交互检查和组件重建方法见 [ui/THIRD_PARTY.md](ui/THIRD_PARTY.md)。
 
 第一轮代码审阅与后续计划见 [docs/REVIEW.md](docs/REVIEW.md)。
+
+## 塔罗牌桌
+
+从工资监控侧栏点击“塔罗牌桌”，或运行 `python main.py --tarot`。在同一 WebView 内切换，不同时启动两个工资存档写入窗口。
+
+新增 WebView 界面提供八种牌阵：单张、时间三牌、二选一、关系镜像、现状与建议、五牌探索、七牌马蹄、凯尔特十字。选择时预览牌位；抽取后点击牌背逐张翻开，点击牌面查看核心牌义、牌位视角、行动建议及反思问题。逆位采用独立内容，不是正位加前缀。十字牌阵第二张横置在核心牌上。支持键盘翻牌及系统减少动态效果。
+
+![塔罗牌桌（演示阅读）](docs/screenshots/tarot-table.png)
+
+78 张牌的正逆位中文内容位于 `data/tarot_meanings_zh.json`，由 WESI 编写。当前解读为固定牌义与牌位视角组合，不是 AI 个性化推理；问题只用于记录和自行对照，不用于猜测个人经历。复杂牌间关系和可选 AI 解读留待下一轮。
+
+新版历史沿用 `tarot_history.json`，保存当次牌面、正逆位、牌位布局和解读文本。打开历史不重新抽牌、不按新牌义改写旧记录。旧 Tk 历史兼容，经典窗口仍保留旧的四种牌阵；新版从 WebView 进入。不会自动把阅读问题发往外部服务。
+
+开源参考、现有牌面来源及本轮复用范围见 [docs/TAROT_DESIGN.md](docs/TAROT_DESIGN.md)。桌面验证使用临时历史：`QT_API=pyside6 python tools/check_tarot_webview.py`（Linux Qt）；测试详情同前端说明。Windows WebView2 翻牌效果仍需本地验收。

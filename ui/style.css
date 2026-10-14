@@ -774,3 +774,9 @@ input {
 .receipt-coin { position: absolute; width: 28px; height: 28px; image-rendering: pixelated; }
 .compact .wallet-card { display: none; }
 @media (max-width: 550px) { .wallet-summary { align-items: flex-start; flex-direction: column; } }
+
+.wallet-icon { border: 1px solid #36594c; cursor: pointer; }
+#receipt-history li { padding: 10px 0; border-bottom: 1px solid #26323b; }
+#receipt-history .text-button { display: inline-flex; margin-right: 18px; }
+.receipt-comparison { font-size: 11px; }
+#receipt-notice { color: #a4e9cf; font-size: 12px; }

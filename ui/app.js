@@ -7,6 +7,7 @@ const amount = $('amount');
 amount.format = {style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2};
 amount.locales = 'en-IE';
 let current = null, privacy = false, pinned = false, compact = false, pollTimer = null;
+let editingPeriod = null, historySignature = null;
 let connected = false, saving = false, generation = 0;
 const api = () => window.pywebview?.api;
 const text = (id, value) => { $(id).textContent = value; };
@@ -19,12 +20,27 @@ function render(data) {
   text('payday-info', `每月 ${payroll.payday} 日 · 下次 ${data.next_payday || '—'}${data.payday_days === undefined ? '' : ` · ${data.payday_days === 0 ? '今天发薪' : `还有 ${data.payday_days} 天`}`}`);
   const entries = Object.entries(payroll.receipts).sort(([a], [b]) => b.localeCompare(a));
   text('wallet-total', financial(entries.reduce((sum, [, receipt]) => sum + receipt.amount_cents / 100, 0)));
-  $('receipt-history').replaceChildren(...entries.map(([period, receipt]) => {
-    const item = document.createElement('li');
-    item.textContent = `${period} · ${receipt.received_on} · ${financial(receipt.amount_cents / 100)}`;
-    return item;
-  }));
-  if (!entries.length) {const li = document.createElement('li'); li.textContent = '暂无到账记录'; $('receipt-history').append(li);}
+  const signature = JSON.stringify([entries, privacy, data.income.monthly_net_salary]);
+  if (signature !== historySignature) {
+    historySignature = signature;
+    $('receipt-history').replaceChildren(...entries.map(([period, receipt]) => {
+      const item = document.createElement('li');
+      const expected = receipt.expected_cents === undefined ? data.income.monthly_net_salary : receipt.expected_cents / 100;
+      const description = document.createElement('div');
+      description.textContent = `${period} · ${receipt.received_on} · 实际 ${financial(receipt.amount_cents / 100)}`;
+      const comparison = document.createElement('div');
+      comparison.className = 'receipt-comparison';
+      comparison.textContent = `${receipt.expected_cents === undefined ? '当前设置月薪（旧记录参考）' : '记录时设置月薪'} ${financial(expected)} · 差额 ${financial(receipt.amount_cents / 100 - expected)}`;
+      item.append(description, comparison);
+      for (const [label, action] of [['编辑', () => openReceipt(period)], ['撤销', () => revokeReceipt(period)]]) {
+        const button = document.createElement('button'); button.type = 'button'; button.className = 'text-button';
+        button.textContent = label; button.setAttribute('aria-label', `${label} ${period} 到账记录`);
+        button.addEventListener('click', action); item.append(button);
+      }
+      return item;
+    }));
+    if (!entries.length) {const li = document.createElement('li'); li.textContent = '暂无到账记录'; $('receipt-history').append(li);}
+  }
   text('receipt-status', payroll.receipts[data.date.slice(0, 7)] ? '本月工资已记录到账' : '本月工资尚未确认到账');
   text('date', data.date.replaceAll('-', ' / '));
   text('status', data.status);
@@ -155,16 +171,35 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
-$('receipt-open').addEventListener('click', () => {
+function openReceipt(period = null) {
   if (!current || saving) return;
-  $('receipt-period').value = current.date.slice(0, 7);
+  editingPeriod = period;
+  const receipt = period ? current.payroll.receipts[period] : null;
+  $('receipt-period').value = period || current.date.slice(0, 7);
   $('receipt-period').max = current.date.slice(0, 7);
-  $('receipt-date').value = current.date;
+  $('receipt-date').value = receipt?.received_on || current.date;
   $('receipt-date').max = current.date;
-  $('receipt-amount').value = current.income.monthly_net_salary;
+  $('receipt-amount').value = receipt ? (receipt.amount_cents / 100).toFixed(2) : current.income.monthly_net_salary;
+  text('receipt-title', period ? '编辑到账记录' : '确认工资到账');
+  $('receipt-form').querySelector('button[type=submit]').textContent = period ? '保存修改' : '保存到账记录';
   text('receipt-error', '');
   $('receipt-dialog').showModal();
+}
+$('receipt-open').addEventListener('click', () => openReceipt());
+$('wallet-icon').addEventListener('click', () => { $('wallet-details').open = !$('wallet-details').open; });
+$('wallet-details').addEventListener('toggle', () => {
+  $('wallet-icon').setAttribute('aria-expanded', String($('wallet-details').open));
 });
+async function revokeReceipt(period) {
+  if (saving || !confirm(`撤销 ${period} 的到账记录？钱包合计会扣除这笔记录，此操作不会移动银行资金。`)) return;
+  saving = true; generation += 1;
+  try {
+    const result = await api().revoke_receipt(period);
+    if (!result.ok) {text('receipt-notice', result.error); return;}
+    render(result.snapshot); text('receipt-notice', `${period} 到账记录已撤销`);
+  } catch {text('receipt-notice', '撤销结果尚未确认，请刷新明细后检查。');}
+  finally {saving = false;}
+}
 $('receipt-close').addEventListener('click', () => $('receipt-dialog').close());
 function celebrateReceipt() {
   if (privacy || current.payroll?.animations === false || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -195,13 +230,15 @@ $('receipt-form').addEventListener('submit', async event => {
   const button = event.submitter;
   saving = true; generation += 1; button.disabled = true;
   try {
-    const result = await api().confirm_receipt({
+    const payload = {
       period: $('receipt-period').value, amount: $('receipt-amount').value, received_on: $('receipt-date').value,
-    });
+    };
+    const result = editingPeriod ? await api().edit_receipt(editingPeriod, payload) : await api().confirm_receipt(payload);
     if (!result.ok) {text('receipt-error', result.error); return;}
     render(result.snapshot);
     $('receipt-dialog').close();
-    celebrateReceipt();
+    if (editingPeriod) text('receipt-notice', '到账记录已更新');
+    else {text('receipt-notice', '到账记录已保存'); celebrateReceipt();}
   } catch {text('receipt-error', '未能确认记录是否保存，请重试；同一月份不会重复记账。');}
   finally {saving = false; button.disabled = false;}
 });
