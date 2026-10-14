@@ -43,7 +43,7 @@ def main():
                     wait("document.querySelectorAll('.tarot-card').length === 10")
                     window.evaluate_js("document.getElementById('reveal-all').click()")
                     wait("document.querySelectorAll('.revealed').length === 10 && document.querySelectorAll('.card-front img').length === 10")
-                    wait("document.getElementById('offline-reading').textContent.includes('牌间关系')")
+                    wait("document.getElementById('offline-reading').textContent.includes('整体主题')")
                     cards=api._tarot.history()[0]['cards']
                     window.evaluate_js("window.confirm=()=>true; document.getElementById('ai-generate').click()")
                     wait("document.getElementById('ai-reading').textContent.includes('本机模拟 AI')")

@@ -34,11 +34,16 @@ function showReading(index) {
   document.querySelectorAll('.tarot-card').forEach((button, i) => button.classList.toggle('selected', i === index));
   $('card-title').textContent = `${card.name_zh} · ${card.position}`;
   $('orientation').textContent = `${card.name_en || ''} / ${card.reversed ? '逆位' : '正位'}`;
-  const reading = card.reading || {core: card.desc || '旧记录没有保存解读内容。'};
-  const labels = {core:'核心牌义', position:'此牌位的视角', action:'行动建议', reflection:'反思问题'};
+  const reading = {...(card.reading || {core:card.desc || '旧记录没有保存解读内容。'})};
+  if (card.reference) {
+    reading.reference = `对应${card.reversed ? '逆位' : '正位'}：${card.reference.direction_meanings.join('；')}\n建设性视角：${card.reference.constructive.join('；')}\n失衡视角：${card.reference.shadow.join('；')}\n来源：${card.reference.sources.join(' / ')}。${card.reference.note}`;
+  }
+  const labels = {core:'核心牌义', position:'此牌位的视角', action:'行动建议', reflection:'反思问题',reference:'公开资料原文（英语）'};
   $('card-reading').replaceChildren(...Object.entries(reading).flatMap(([key, value]) => {
     const heading = document.createElement('h3'); heading.textContent = labels[key] || key;
-    const paragraph = document.createElement('p'); paragraph.textContent = value; return [heading, paragraph];
+    const paragraph = document.createElement('p'); paragraph.textContent = value;
+    if (key === 'reference') {const details=document.createElement('details');const summary=document.createElement('summary');summary.textContent=heading.textContent;details.append(summary,paragraph);return [details];}
+    return [heading, paragraph];
   }));
 }
 function reportNodes(report) {
@@ -61,7 +66,7 @@ function wholeReading() {
   const allRevealed = current && revealed.size === current.cards.length;
   $('whole-reading').hidden = !allRevealed;
   if (!allRevealed) return;
-  $('offline-reading').replaceChildren(...reportNodes(current.synthesis));
+  $('offline-reading').replaceChildren(...reportNodes({...current.synthesis,conclusion:undefined,evidence:undefined,relations:[]}));
   if (!current.synthesis) $('offline-reading').textContent = '旧记录未保存整组解读，保留原始单牌文字。';
   $('ai-reading').replaceChildren(...reportNodes(current.ai_reading));
   if (current.ai_reading) {const heading=document.createElement('h2');heading.textContent='AI 深入解读';$('ai-reading').prepend(heading);}

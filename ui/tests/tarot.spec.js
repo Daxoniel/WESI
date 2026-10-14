@@ -1,5 +1,6 @@
 import {test, expect} from '@playwright/test';
 const entry = {id:'demo', time:'2026-10-14 12:00:00', question:'我的问题 <script>', spread:'guidance', spread_label:'现状与建议', layout:{coordinates:[[0,0],[1,0],[2,0]]}, cards:[0,1,2].map((i)=>({name_zh:['愚者','魔术师','女祭司'][i],name_en:'Card',position:['现状','阻碍','建议'][i],reversed:i===1,img:'m00.jpg',desc:'核心',reading:{core:i===1?'逆位独立牌义':'正位独立牌义',position:'牌位视角',action:'具体行动',reflection:'反思问题'}}))};
+entry.cards[1].reference={direction_meanings:['poor planning'],constructive:['clear communication'],shadow:['confusion'],sources:['LindseyB/tarot-api (MIT)','dariusk/corpora (CC0)'],note:'两种表现不等于正逆位'};
 entry.synthesis={overview:'离线整组总览',themes:['花色主题'],relations:['现状与阻碍对照'],actions:['先核实事实'],questions:['有哪些支持证据？'],method:'离线规则'};
 test.beforeEach(async ({page})=>{
  await page.addInitScript(entry=>{
@@ -29,6 +30,8 @@ test('draw, keyboard reveal, position reading and historical restoration', async
  await page.keyboard.press('Enter');
  await expect(page.locator('#orientation')).toContainText('逆位');
  await expect(page.locator('#card-reading')).toContainText('逆位独立牌义');
+ await expect(page.locator('#card-reading')).toContainText('poor planning');
+ await expect(page.locator('#card-reading')).toContainText('LindseyB/tarot-api');
  await expect(page.locator('#reading-question')).toContainText('<script>');
  await page.locator('#history-open').click();
  await page.locator('#history-list button').click();
@@ -54,7 +57,7 @@ test('whole reading waits for reveal; optional AI saves without drawing again',a
  await page.locator('.tarot-card').first().click();
  await expect(page.locator('#whole-reading')).toBeHidden();
  await page.locator('#reveal-all').click();
- await expect(page.locator('#offline-reading')).toContainText('现状与阻碍对照');
+ await expect(page.locator('#offline-reading')).toContainText('花色主题');
  page.once('dialog',dialog=>dialog.accept());await page.locator('#ai-generate').click();
  await expect(page.locator('#ai-reading')).toContainText('结合问题的深入解读');
  await page.locator('#history-open').click();await page.locator('#history-list button').click();

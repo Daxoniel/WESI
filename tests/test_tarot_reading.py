@@ -17,8 +17,8 @@ class SynthesisTests(unittest.TestCase):
         before=copy.deepcopy(entry)
         result=synthesize(entry)
         self.assertEqual(result['context'],'工作与学习')
-        self.assertIn('圣杯一',result['relations'][0])
-        self.assertIn('宝剑二',result['relations'][0])
+        self.assertEqual(result['relations'], [])
+        self.assertTrue(any('圣杯一' in theme for theme in result['themes']))
         self.assertIn('小尝试',result['actions'][0])
         self.assertEqual(entry,before)
 
@@ -92,10 +92,9 @@ class QuestionSynthesisTests(unittest.TestCase):
             {'name_zh':'星币侍从','position':'你的立场','reversed':True,'desc':'学习停留在想法'},
             {'name_zh':'圣杯五','position':'可能发展','reversed':False,'desc':'承认失落，留意支持'}]}
         result=synthesize(entry)
-        self.assertIn('不能支持具体日期',result['conclusion'])
-        self.assertIn('投入与回报失衡',result['conclusion'])
-        self.assertIn('圣杯五',result['conclusion'])
-        self.assertTrue(any('星币七' in e and '星币侍从' in e for e in result['evidence']))
+        self.assertTrue(result['intent']['timing'])
+        self.assertNotIn('conclusion', result)
+        self.assertEqual(result['relations'], [])
 
     def test_seven_and_ten_of_pentacles_have_correct_independent_meanings(self):
         from config import PROJECT_DIR
@@ -107,5 +106,5 @@ class QuestionSynthesisTests(unittest.TestCase):
     def test_no_matching_theme_does_not_invent_conflict_or_result(self):
         result=synthesize({'question':'我该怎样看待现在？','spread':'single','cards':[
             {'name_zh':'星星','position':'此刻','reversed':False,'desc':'希望与恢复','reading':{'action':'小步骤'}}]})
-        self.assertIn('未识别出稳定的共同矛盾',result['conclusion'])
-        self.assertIn('没有明确结果位',result['conclusion'])
+        self.assertNotIn('conclusion', result)
+        self.assertNotIn('evidence', result)

@@ -60,3 +60,8 @@ a { color: #c9b789; text-decoration: none; }
 .whole-reading small, #ai-note { color: #a499b2; font-size: 12px; }
 .ai-controls { margin-top: 22px; }
 #ai-reading:not(:empty) { border: 1px solid #55476c; border-radius: 12px; margin-top: 18px; padding: 18px; }
+
+#card-reading p { white-space: pre-line; overflow-wrap: anywhere; }
+
+#card-reading details { margin-top: 24px; color: #dac391; font-size: 13px; }
+#card-reading summary { cursor: pointer; }
