@@ -53,3 +53,10 @@ a { color: #c9b789; text-decoration: none; }
 
 .tarot-card { width: 100%; max-width: 260px; justify-self: center; }
 .tarot-main .cross-card { width: 64%; }
+
+.whole-reading { border-top: 1px solid #493950; padding-top: 20px; margin-top: 18px; }
+.whole-reading h3 { color: #dac391; font-size: 14px; margin-top: 22px; }
+.whole-reading p, .whole-reading li { color: #c9bfd4; font-size: 13px; line-height: 1.9; overflow-wrap: anywhere; }
+.whole-reading small, #ai-note { color: #a499b2; font-size: 12px; }
+.ai-controls { margin-top: 22px; }
+#ai-reading:not(:empty) { border: 1px solid #55476c; border-radius: 12px; margin-top: 18px; padding: 18px; }

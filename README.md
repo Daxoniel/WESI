@@ -89,3 +89,20 @@ QT_API=pyside6 python tools/check_webview.py --gui qt
 新版历史沿用 `tarot_history.json`，保存当次牌面、正逆位、牌位布局和解读文本。打开历史不重新抽牌、不按新牌义改写旧记录。旧 Tk 历史兼容，经典窗口仍保留旧的四种牌阵；新版从 WebView 进入。不会自动把阅读问题发往外部服务。
 
 开源参考、现有牌面来源及本轮复用范围见 [docs/TAROT_DESIGN.md](docs/TAROT_DESIGN.md)。桌面验证使用临时历史：`QT_API=pyside6 python tools/check_tarot_webview.py`（Linux Qt）；测试详情同前端说明。Windows WebView2 翻牌效果仍需本地验收。
+
+### 整组解读与可选 AI
+
+翻开全部牌后显示整组解读：问题关键词提示、花色主题、正逆位概况、关键牌位对照和行动建议。离线规则只对照输入与牌面，不猜测个人事实。新阅读将整组解读一并保存；旧记录保持原文，不自动重算。
+
+AI 默认不请求任何服务。可在启动前配置兼容 OpenAI Chat Completions 的服务（密钥不写入存档或前端）：
+
+```powershell
+$env:WESI_TAROT_AI_BASE = "https://api.openai.com/v1"
+$env:WESI_TAROT_AI_MODEL = "你使用的模型名称"
+$env:WESI_TAROT_AI_KEY = "你的服务密钥"
+.\.venv\Scripts\python.exe main.py --tarot
+```
+
+本机服务可使用 `http://127.0.0.1:端口/v1`；远程服务使用 HTTPS。配置后点击“结合问题深入解读（AI）”，确认发送当前问题、牌位及牌义。调用可能产生服务费用；不会发送工资数据、历史中的其他阅读或牌面图片。超时为 45 秒，服务需返回可解析的结构化 JSON；不兼容响应会显示失败并保留离线阅读。
+
+AI 结果保存到当次历史，重看不重新调用，也不重新抽牌。当前不提供重新生成按钮。生成成功但保存失败时，当前进程缓存结果以便重试写入；超时、重启或服务端已完成但客户端未收到响应时，重试仍可能产生新的请求。未使用真实付费服务验证，桌面集成测试使用本机模拟服务，实际模型质量与服务兼容性需要配置后试用。

@@ -152,6 +152,9 @@ class SalaryAPI:
     def tarot_draw(self, spread, question):
         return self._tarot.draw(spread, question)
 
+    def tarot_ai_reading(self, entry_id):
+        return self._tarot.ai_reading(entry_id)
+
     def tarot_history(self):
         return self._tarot.history()
 
