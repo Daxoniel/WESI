@@ -18,6 +18,8 @@ class SalaryAPI:
         self._lock = threading.RLock()
         self._window = None
         self._classic = False
+        from tarot_service import TarotService
+        self._tarot = TarotService()
 
     def snapshot(self):
         with self._lock:
@@ -144,6 +146,18 @@ class SalaryAPI:
             self._store.state = updated
             return {"ok": True, "snapshot": self.snapshot()}
 
+    def tarot_catalog(self):
+        return self._tarot.catalog()
+
+    def tarot_draw(self, spread, question):
+        return self._tarot.draw(spread, question)
+
+    def tarot_history(self):
+        return self._tarot.history()
+
+    def tarot_image(self, filename):
+        return self._tarot.image(filename)
+
     def set_pin(self, enabled):
         if not isinstance(enabled, bool):
             return False
@@ -169,11 +183,11 @@ class SalaryAPI:
             self._window.destroy()
 
 
-def launch():
+def launch(tarot=False):
     import webview
     api = SalaryAPI()
     api._window = webview.create_window(
-        "WESI · 工资监控", str(Path(__file__).resolve().parent / "ui/index.html"),
+        "WESI · 工资监控", str(Path(__file__).resolve().parent / ("ui/tarot.html" if tarot else "ui/index.html")),
         js_api=api, width=1040, height=760, min_size=(390, 410), background_color="#0c1015",
     )
     webview.start(http_server=True)

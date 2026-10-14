@@ -75,3 +75,17 @@ QT_API=pyside6 python tools/check_webview.py --gui qt
 前端交互检查和组件重建方法见 [ui/THIRD_PARTY.md](ui/THIRD_PARTY.md)。
 
 第一轮代码审阅与后续计划见 [docs/REVIEW.md](docs/REVIEW.md)。
+
+## 塔罗牌桌
+
+从工资监控侧栏点击“塔罗牌桌”，或运行 `python main.py --tarot`。在同一 WebView 内切换，不同时启动两个工资存档写入窗口。
+
+新增 WebView 界面提供八种牌阵：单张、时间三牌、二选一、关系镜像、现状与建议、五牌探索、七牌马蹄、凯尔特十字。选择时预览牌位；抽取后点击牌背逐张翻开，点击牌面查看核心牌义、牌位视角、行动建议及反思问题。逆位采用独立内容，不是正位加前缀。十字牌阵第二张横置在核心牌上。支持键盘翻牌及系统减少动态效果。
+
+![塔罗牌桌（演示阅读）](docs/screenshots/tarot-table.png)
+
+78 张牌的正逆位中文内容位于 `data/tarot_meanings_zh.json`，由 WESI 编写。当前解读为固定牌义与牌位视角组合，不是 AI 个性化推理；问题只用于记录和自行对照，不用于猜测个人经历。复杂牌间关系和可选 AI 解读留待下一轮。
+
+新版历史沿用 `tarot_history.json`，保存当次牌面、正逆位、牌位布局和解读文本。打开历史不重新抽牌、不按新牌义改写旧记录。旧 Tk 历史兼容，经典窗口仍保留旧的四种牌阵；新版从 WebView 进入。不会自动把阅读问题发往外部服务。
+
+开源参考、现有牌面来源及本轮复用范围见 [docs/TAROT_DESIGN.md](docs/TAROT_DESIGN.md)。桌面验证使用临时历史：`QT_API=pyside6 python tools/check_tarot_webview.py`（Linux Qt）；测试详情同前端说明。Windows WebView2 翻牌效果仍需本地验收。
