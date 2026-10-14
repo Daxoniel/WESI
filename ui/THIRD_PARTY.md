@@ -28,3 +28,7 @@ npm test
 测试首次运行可使用 `npx playwright install chromium` 安装浏览器，或用 `WESI_CHROMIUM_PATH` 指向现有 Chromium。
 测试使用模拟桥接验证界面；`python tools/check_webview.py` 另行验证真实桌面 WebView 与 Python 数据。
 构建脚本会从锁定依赖复制授权文件和字体，运行时不访问 CDN、远程字体或第三方图标服务。
+
+## 桌宠
+
+[VS Code Pets](https://github.com/tonybaloney/vscode-pets) 的真实状态机与 RubberDuck 类已打包到 `vendor/pet-engine.js`。固定提交、原始 MIT 许可证、保留的 TypeScript 源码与素材作者见 [vendor/vscode-pets/UPSTREAM.md](vendor/vscode-pets/UPSTREAM.md)。小黄鸭素材由上游注明 Marc Duiker 创作。本轮没有引入完整 VS Code 扩展或依赖 VS Code 运行；WESI 自己提供桌面窗口与文字游戏。

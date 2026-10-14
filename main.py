@@ -801,5 +801,5 @@ if __name__ == "__main__":
         WESI().run()
     else:
         from salary_web import launch
-        if launch(tarot="--tarot" in sys.argv):
+        if launch(tarot="--tarot" in sys.argv, pet="--pet" in sys.argv):
             WESI().run()

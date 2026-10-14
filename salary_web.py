@@ -20,6 +20,9 @@ class SalaryAPI:
         self._classic = False
         from tarot_service import TarotService
         self._tarot = TarotService()
+        from pet_game import PetGame
+        self._pet_game = PetGame(self._store, self._lock, clock)
+        self._pet_window = None
 
     def snapshot(self):
         with self._lock:
@@ -161,6 +164,44 @@ class SalaryAPI:
     def tarot_image(self, filename):
         return self._tarot.image(filename)
 
+    def pet_snapshot(self):
+        return self._pet_game.snapshot()
+
+    def pet_dispatch(self, route):
+        return self._pet_game.dispatch(route)
+
+    def pet_interact(self, action):
+        return self._pet_game.interact(action)
+
+    def pet_upgrade_home(self):
+        return self._pet_game.upgrade_home()
+
+    def open_desktop_pet(self):
+        import webview
+        with self._lock:
+            if self._pet_window is not None:
+                self._pet_window.show()
+                return True
+            self._pet_window = webview.create_window(
+                "WESI 桌宠", str(Path(__file__).resolve().parent / "ui/desktop_pet.html"),
+                js_api=self, width=320, height=240, min_size=(240,180), frameless=True,
+                transparent=True, on_top=True, easy_drag=False,
+            )
+            self._pet_window.events.closed += self._pet_closed
+            return True
+
+    def _pet_closed(self):
+        self._pet_window = None
+
+    def close_desktop_pet(self):
+        window = self._pet_window
+        if window is not None:
+            window.destroy()
+
+    def open_pet_game(self):
+        if self._window is not None:
+            self._window.load_url(str(Path(__file__).resolve().parent / "ui/pet.html"))
+
     def set_pin(self, enabled):
         if not isinstance(enabled, bool):
             return False
@@ -182,16 +223,18 @@ class SalaryAPI:
     def open_classic(self):
         # Close the web app before opening Tk: only one store writer at a time.
         self._classic = True
+        self.close_desktop_pet()
         if self._window is not None:
             self._window.destroy()
 
 
-def launch(tarot=False):
+def launch(tarot=False, pet=False):
     import webview
     api = SalaryAPI()
     api._window = webview.create_window(
-        "WESI · 工资监控", str(Path(__file__).resolve().parent / ("ui/tarot.html" if tarot else "ui/index.html")),
+        "WESI · 伙伴小屋" if pet else "WESI · 星夜牌桌" if tarot else "WESI · 工资监控", str(Path(__file__).resolve().parent / ("ui/pet.html" if pet else "ui/tarot.html" if tarot else "ui/index.html")),
         js_api=api, width=1040, height=760, min_size=(390, 410), background_color="#0c1015",
     )
+    api._window.events.closed += api.close_desktop_pet
     webview.start(http_server=True)
     return api._classic

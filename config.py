@@ -113,6 +113,7 @@ DEFAULT_STATE: Dict[str, Any] = {
         "favorites": [],
         "last_index": -1,
     },
+    "pet_game": {"home_level": 0, "xp": 0, "materials": {"干粮": 3, "树枝": 0, "石片": 0}, "task": None, "log": [], "last_pet": "", "last_feed": ""},
     "pet": {
         "name": "Mochi",
         "image_path": "",

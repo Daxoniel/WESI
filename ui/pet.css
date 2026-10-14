@@ -1,0 +1,12 @@
+.pet-main { max-width:1050px; margin:auto; padding:28px; }
+.pet-main a { display:block; color:#a4d9c4; margin-bottom:16px; text-decoration:none; }
+.pet-main button { cursor:pointer; border:1px solid #365849; background:#a7dfbe; color:#16332a; border-radius:10px; padding:10px 16px; font:inherit; }
+.pet-main button:disabled { opacity:.5;cursor:wait; }
+.pet-main .card { padding:24px; margin:16px 0; border-radius:16px; }
+.companion { display:grid; grid-template-columns:1fr 1fr; background:linear-gradient(120deg,#203a30,#18232c); }
+.companion iframe { width:100%;height:230px;border:0; background:radial-gradient(ellipse at bottom,#426751,transparent 70%); }
+.pet-main p, .pet-main li { color:#a7b8ae; font-size:13px;line-height:1.8; }
+.actions,#routes { display:flex;flex-wrap:wrap;gap:12px; }
+.details { display:grid;grid-template-columns:1fr 1.4fr;gap:16px; }
+#log { max-height:280px;overflow:auto;padding-left:20px; }#notice { color:#abe3c4;min-height:24px; }
+@media(max-width:650px) { .pet-main { padding:14px; }.companion,.details { grid-template-columns:1fr; } }
