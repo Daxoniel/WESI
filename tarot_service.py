@@ -12,6 +12,7 @@ from config import PROJECT_DIR, TAROT_DIR, TAROT_HISTORY_FILE
 from storage import read_json, write_json
 from utils import load_tarot_cards
 from tarot_reading import synthesize
+from tarot_reference import reference_for
 import tarot_ai
 
 
@@ -80,7 +81,7 @@ class TarotService:
                 cards.append({**copy.deepcopy(card), "position": position, "reversed": reverse,
                     "desc": core, "reading": {"core": core, "position": LENSES[position],
                     "action": meaning["reversed_action" if reverse else "upright_action"],
-                    "reflection": f"在「{position}」这个角度，你有哪些事实支持这一主题？哪些地方并不符合你的经历？"}})
+                    "reflection": f"在「{position}」这个角度，你有哪些事实支持这一主题？哪些地方并不符合你的经历？"}, "reference": reference_for({**card,"reversed":reverse})})
             entry = {"id": uuid4().hex, "version": 2, "time": self.clock().strftime("%Y-%m-%d %H:%M:%S"),
                 "question": question.strip(), "spread": spread_key, "spread_label": layout["label"],
                 "layout": copy.deepcopy(layout), "cards": cards,
