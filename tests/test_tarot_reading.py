@@ -78,3 +78,34 @@ class AITransportTests(unittest.TestCase):
         with patch.dict(os.environ,{'WESI_TAROT_AI_MODEL':'test','WESI_TAROT_AI_BASE':'http://example.com/v1'},clear=True),patch('tarot_ai.build_opener') as network:
             with self.assertRaises(ValueError):tarot_ai.interpret({})
             network.assert_not_called()
+
+class QuestionSynthesisTests(unittest.TestCase):
+    def test_time_and_finance_are_both_recognized_and_no_date_is_invented(self):
+        from tarot_reading import question_intent
+        intent=question_intent('什么时候才能摆脱金钱焦虑？')
+        self.assertTrue(intent['timing'])
+        self.assertIn('财务',intent['domains'])
+        entry={'question':'什么时候才能摆脱金钱焦虑？','spread':'celtic','cards':[
+            {'name_zh':'权杖十','position':'核心现状','reversed':False,'desc':'责任过重，需要减负'},
+            {'name_zh':'星币骑士','position':'交叉挑战','reversed':True,'desc':'拖延阻碍进展'},
+            {'name_zh':'星币七','position':'深层基础','reversed':True,'desc':'投入与回报不匹配'},
+            {'name_zh':'星币侍从','position':'你的立场','reversed':True,'desc':'学习停留在想法'},
+            {'name_zh':'圣杯五','position':'可能发展','reversed':False,'desc':'承认失落，留意支持'}]}
+        result=synthesize(entry)
+        self.assertIn('不能支持具体日期',result['conclusion'])
+        self.assertIn('投入与回报失衡',result['conclusion'])
+        self.assertIn('圣杯五',result['conclusion'])
+        self.assertTrue(any('星币七' in e and '星币侍从' in e for e in result['evidence']))
+
+    def test_seven_and_ten_of_pentacles_have_correct_independent_meanings(self):
+        from config import PROJECT_DIR
+        meanings=json.loads((PROJECT_DIR/'data/tarot_meanings_zh.json').read_text())
+        self.assertIn('投入与回报',meanings['Seven of Pentacles']['reversed'])
+        self.assertIn('长期安排',meanings['Ten of Pentacles']['reversed'])
+        self.assertNotEqual(meanings['Seven of Pentacles'],meanings['Ten of Pentacles'])
+
+    def test_no_matching_theme_does_not_invent_conflict_or_result(self):
+        result=synthesize({'question':'我该怎样看待现在？','spread':'single','cards':[
+            {'name_zh':'星星','position':'此刻','reversed':False,'desc':'希望与恢复','reading':{'action':'小步骤'}}]})
+        self.assertIn('未识别出稳定的共同矛盾',result['conclusion'])
+        self.assertIn('没有明确结果位',result['conclusion'])

@@ -45,7 +45,8 @@ function reportNodes(report) {
   const nodes = [];
   if (!report) return nodes;
   const overview = document.createElement('p'); overview.textContent = report.overview; nodes.push(overview);
-  const labels = {themes:'整体主题',relations:'牌间关系',actions:'可执行的下一步',questions:'值得核实的问题'};
+  if (report.conclusion) {const heading=document.createElement('h3');heading.textContent='针对问题的综合回答';const paragraph=document.createElement('p');paragraph.textContent=report.conclusion;nodes.push(heading,paragraph);}
+  const labels = {evidence:'结论依据',themes:'整体主题',relations:'牌间关系',actions:'可执行的下一步',questions:'值得核实的问题'};
   for (const [key,label] of Object.entries(labels)) {
     if (!report[key]?.length) continue;
     const heading = document.createElement('h3'); heading.textContent = label;
@@ -63,6 +64,7 @@ function wholeReading() {
   $('offline-reading').replaceChildren(...reportNodes(current.synthesis));
   if (!current.synthesis) $('offline-reading').textContent = '旧记录未保存整组解读，保留原始单牌文字。';
   $('ai-reading').replaceChildren(...reportNodes(current.ai_reading));
+  if (current.ai_reading) {const heading=document.createElement('h2');heading.textContent='AI 深入解读';$('ai-reading').prepend(heading);}
   $('ai-generate').hidden = !!current.ai_reading;
   $('ai-generate').disabled = busy || !catalog.ai?.available || !current.id;
   $('ai-note').textContent = current.ai_reading ? `已保存 ${current.ai_reading.model} 的解读，重看不会再次调用 AI。` : catalog.ai?.available ? `模型 ${catalog.ai.model}。点击后将当前问题、牌位与牌义发送到配置的服务，可能产生费用。` : 'AI 默认关闭；可配置服务地址、模型和密钥后重新启动。离线整组解读无需联网。';
